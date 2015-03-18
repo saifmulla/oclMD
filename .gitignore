@@ -1,0 +1,8 @@
+*~
+build
+Makefile
+*.dylib
+*.a
+*.so
+xcode
+gtest
