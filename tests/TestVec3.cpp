@@ -90,6 +90,7 @@ TEST(TestVec3, ompArray){
         vec3array[i] = Vec3(0.00864,0.653,0.2345);
     }
 
+#pragma omp parallel for default(none)
     for (int j = 0; j<100000; j++) {
         vec3array[j] = vec3array[j] * 0.0987;
     }
