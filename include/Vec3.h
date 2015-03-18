@@ -26,6 +26,19 @@ public:
         data_[2] = z;
     }
     
+    //copy constructor to disable default copy
+    Vec3(const Vec3& copyme){
+        data_[0] = copyme[0];
+	data_[1] = copyme[1];
+	data_[2] = copyme[2];
+    }
+    
+    Vec3 operator=(const Vec3& lhs){
+        data_[0] = lhs[0];
+	data_[1] = lhs[1];
+	data_[2] = lhs[2];
+    }
+    
     double operator[](int index) const{
         if(index>=0 && index<3)
             return data_[index];
@@ -50,7 +63,7 @@ public:
         return (data_[0] == rhs[0] && data_[1] == rhs[1] && data_[2] == rhs[2]);
     }
     
-    
+    ~Vec3(){}
     
 };//end class
     

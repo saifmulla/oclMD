@@ -83,6 +83,24 @@ TEST(TestVec3, compare){
         FAIL();
 }
 
+TEST(TestVec3, copy){
+    Vec3 copyfrom(0.986,0.53,0.23);
+    Vec3 copyTo(copyfrom);
+    if(copyfrom == copyTo)
+        SUCCEED();
+    else
+	FAIL();
+}
+
+TEST(TestVec3, assign){
+    Vec3 copyfrom(0.986,0.53,0.23);
+    Vec3 copyTo = copyfrom;
+    if(copyfrom == copyTo)
+        SUCCEED();
+    else
+	FAIL();
+}
+
 TEST(TestVec3, ompArray){
     std::valarray<Vec3> vec3array(100000);
     for(int i = 0;i < 100000;++i)
@@ -90,10 +108,12 @@ TEST(TestVec3, ompArray){
         vec3array[i] = Vec3(0.00864,0.653,0.2345);
     }
 
-#pragma omp parallel for default(none)
-    for (int j = 0; j<100000; j++) {
+#pragma omp parallel default(none)
+{
+    for (int j = omp_get_thread_num(); j<100000; j+=omp_get_num_threads()) {
         vec3array[j] = vec3array[j] * 0.0987;
     }
+}
 }
 
 
