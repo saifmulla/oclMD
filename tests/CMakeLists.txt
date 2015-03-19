@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(OclMDTests)
 
-message("TEST GTEST " ${GTEST_DIR})
 include_directories("../include")
 include_directories("${GTEST_DIR}/include")
 

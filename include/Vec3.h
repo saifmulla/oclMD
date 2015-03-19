@@ -29,8 +29,8 @@ public:
     //copy constructor to disable default copy
     Vec3(const Vec3& copyme){
         data_[0] = copyme[0];
-	data_[1] = copyme[1];
-	data_[2] = copyme[2];
+        data_[1] = copyme[1];
+        data_[2] = copyme[2];
     }
     
     Vec3 operator=(const Vec3& lhs){
