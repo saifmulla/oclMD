@@ -1,8 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project(OclMDTests)
-
-include_directories("/Volumes/Work/development-codes/oclMD/include")
-include_directories("/Volumes/Work/development-codes/oclMD/gtest/include")
-
-add_executable(Vec3Test TestVec3.cpp)
-target_link_libraries(Vec3Test gomp pthread "-L/Volumes/Work/development-codes/oclMD/gtest" gtest)
