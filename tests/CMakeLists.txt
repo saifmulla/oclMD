@@ -6,3 +6,5 @@ include_directories("${GTEST_DIR}/include")
 
 add_executable(Vec3Test TestVec3.cpp)
 target_link_libraries(Vec3Test gomp pthread "-L${GTEST_DIR}" gtest)
+add_executable(SystemTest TestSystem.cpp)
+target_link_libraries(SystemTest OclMD gomp pthread "-L${GTEST_DIR}" gtest)
