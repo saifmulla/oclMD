@@ -63,7 +63,7 @@ TEST(TestVec3, scalarMultiply){
 TEST(TestVec3, multiplication){
     Vec3 x(0.22,0.33,0.44);
     Vec3 y(0.22,0.33,0.44);
-    y *= x;
+    y = y * x;
     ASSERT_EQ(0.0484,y[0]);
 }
 

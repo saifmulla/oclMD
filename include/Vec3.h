@@ -6,6 +6,8 @@
 //
 //
 
+#include<cassert>
+
 #ifndef OclMD_Vec3_h
 #define OclMD_Vec3_h
 
@@ -33,34 +35,38 @@ public:
         data_[2] = copyme[2];
     }
     
+    double operator[](const int index) const {
+        assert(index>=0 && index<3);
+        return data_[index];
+    }
+    
+    double& operator[](const int index) {
+        assert(index>=0 && index<3);
+        return data_[index];
+    }
+
     Vec3 operator=(const Vec3& lhs){
         data_[0] = lhs[0];
-	data_[1] = lhs[1];
-	data_[2] = lhs[2];
+        data_[1] = lhs[1];
+        data_[2] = lhs[2];
     }
     
-    double operator[](int index) const{
-        if(index>=0 && index<3)
-            return data_[index];
-        else
-            return data_[0];
-    }
-    
-    //scalar product
-    Vec3 operator*(double scalar) const {
-        const Vec3& lhs = *this;
-        return Vec3(lhs[0]*scalar,lhs[1]*scalar,lhs[2]*scalar);
-    }
-    
-    Vec3 operator*=(Vec3& rhs) {
+    Vec3 operator*(Vec3& rhs) {
         data_[0] *= rhs[0];
         data_[1] *= rhs[1];
         data_[2] *= rhs[2];
         return *this;
     }
+    
     //equal operator
     bool operator==(Vec3& rhs){
         return (data_[0] == rhs[0] && data_[1] == rhs[1] && data_[2] == rhs[2]);
+    }
+    
+    //scalar product
+    Vec3 operator*(double scalar){
+        const Vec3& lhs = *this;
+        return Vec3(lhs[0]*scalar, lhs[1]*scalar, lhs[2]*scalar);
     }
     
     ~Vec3(){}
