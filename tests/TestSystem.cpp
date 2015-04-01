@@ -37,6 +37,13 @@ TEST(TestSystem, moleculemass){
     ASSERT_EQ(0.7653,s.getMoleculeMass(0));
 }
 
+TEST(TestSystem, charge){
+    System s;
+    s.setMoleculeCharge(0,0.22);
+    const double c = s.getMoleculeCharge(0);
+    ASSERT_EQ(0.22,c);
+}
+
 int main(int argc, char *argv[]){
     ::testing::InitGoogleTest(&argc,argv);
     return RUN_ALL_TESTS();

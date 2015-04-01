@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(OclMDTests)
 
-include_directories("../include")
-include_directories("${GTEST_DIR}/include")
+INCLUDE_DIRECTORIES("../include" "../gtest/include")
+SET(SHARED_LINKS OclMD gomp pthread "-L${GTEST_DIR}" gtest)
 
-add_executable(Vec3Test TestVec3.cpp)
-target_link_libraries(Vec3Test gomp pthread "-L${GTEST_DIR}" gtest)
-add_executable(SystemTest TestSystem.cpp)
-target_link_libraries(SystemTest OclMD gomp pthread "-L${GTEST_DIR}" gtest)
+ENABLE_TESTING() #testing enabled in this directory
+
+FILE(GLOB TEST_PROGS "Test*.*")
+FOREACH(TEST_PROG ${TEST_PROGS})
+    GET_FILENAME_COMPONENT(TEST_FILE ${TEST_PROG} NAME_WE)
+    ADD_EXECUTABLE(${TEST_FILE} ${TEST_PROG})
+    TARGET_LINK_LIBRARIES(${TEST_FILE} ${SHARED_LINKS})
+    ADD_TEST(${TEST_FILE} ${EXECUTABLE_OUTPUT_PATH}/${TEST_FILE})
+ENDFOREACH(TEST_PROG ${TEST_PROGS})

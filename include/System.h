@@ -25,6 +25,7 @@ private:
     int numParticles_;
     int moleculeSize_;
     double* moleculeMasses_;
+    double* moleculeCharges_;
     std::vector<Force*> forces_;
     
 public:
@@ -41,6 +42,8 @@ public:
     }
     void setMoleculeMass(int index, double mass);
     double getMoleculeMass(int index) const;
+    void setMoleculeCharge(int index, double charge);
+    const double getMoleculeCharge(int index) const;
     int addForce(Force* force){
         forces_.push_back(force);
         return forces_.size()-1;
