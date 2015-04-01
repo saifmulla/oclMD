@@ -17,7 +17,9 @@ TEST(TestNBF,initialise){
     NonBondedForce nbf;
 //    nbf.getCutOffDistance();
     ASSERT_EQ(0.0,nbf.getCutOffDistance());
+    NonBondedForce::NonBondedMethods method = nbf.getNonBondedMethod();
 }
+
 
 int main(int argc, char *argv[]){
     ::testing::InitGoogleTest(&argc,argv);

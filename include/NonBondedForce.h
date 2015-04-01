@@ -18,9 +18,14 @@ namespace OclMD {
 
 class NonBondedForce : public Force {
 public:
-    enum NonBondedMethods{CutOffPeriodic = 0};
+    enum NonBondedMethods{
+        NoCutoff = 0,
+        CutOffPeriodic = 1
+    };
     NonBondedForce();
-    NonBondedMethods getNonBondedMethod() const;
+    NonBondedForce::NonBondedMethods getNonBondedMethod() const {
+        return method_;
+    }
     void setNonBondedMethod(NonBondedMethods method);
     void setCutOffDistance(double distance);
     double getCutOffDistance() const;

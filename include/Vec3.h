@@ -11,18 +11,19 @@
 #ifndef OclMD_Vec3_h
 #define OclMD_Vec3_h
 
+#include "RealType.h"
 namespace OclMD {
 
 class Vec3{
 private:
-    double data_[3];
+    Real data_[3];
     
 public:
     Vec3(){
         data_[0] = data_[1] = data_[2] = 0.0;
     }
     
-    Vec3(double x, double y, double z){
+    Vec3(Real x, Real y, Real z){
         data_[0] = x;
         data_[1] = y;
         data_[2] = z;
@@ -35,12 +36,12 @@ public:
         data_[2] = copyme[2];
     }
     
-    double operator[](const int index) const {
+    Real operator[](const int index) const {
         assert(index>=0 && index<3);
         return data_[index];
     }
     
-    double& operator[](const int index) {
+    Real& operator[](const int index) {
         assert(index>=0 && index<3);
         return data_[index];
     }
@@ -64,7 +65,7 @@ public:
     }
     
     //scalar product
-    Vec3 operator*(double scalar){
+    Vec3 operator*(Real scalar){
         const Vec3& lhs = *this;
         return Vec3(lhs[0]*scalar, lhs[1]*scalar, lhs[2]*scalar);
     }
