@@ -5,6 +5,10 @@ SET(OCLMD_LIBRARY_NAME OclMD) #project library name
 SET(SHARED_TARGET ${OCLMD_LIBRARY_NAME}) #shared
 SET(STATIC_TARGET ${OCLMD_LIBRARY_NAME}_static) #static
 
+#set preprocessor definations for internal realType
+IF(${REALTYPE})
+    ADD_DEFINITIONS(-DREALTYPE=${REALTYPE})
+ENDIF(${REALTYPE})
 SET(CMAKE_BUILD_TYPE Debug) #TODO: later make this generic
 SET(OCLMD_SRC_SUBDIRS "src")
 

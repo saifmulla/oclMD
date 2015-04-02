@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(OclMDTests)
 
-INCLUDE_DIRECTORIES("../include" "../gtest/include")
+INCLUDE_DIRECTORIES("../include" "${GTEST_DIR}/include")
 SET(SHARED_LINKS OclMD gomp pthread "-L${GTEST_DIR}" gtest)
 
 ENABLE_TESTING() #testing enabled in this directory
