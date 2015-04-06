@@ -24,12 +24,15 @@
 #if REALTYPE == 1
     typedef float Real;
 #define REALSIZE 4
+#define REALVAL 0.0f;
 #elif REALTYPE == 2
     typedef double Real;
 #define REALSIZE 8
+#define REALVAL 0.0;
 #elif REALTYPE == 3
     typedef long double Real;
 #define REALSIZE 16
+#define REALVAL 0.0;
 #endif
 //end real check
 

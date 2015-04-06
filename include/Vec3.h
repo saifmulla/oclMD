@@ -7,11 +7,12 @@
 //
 
 #include<cassert>
+#include "RealType.h"
+#include "OclMDException.h"
 
 #ifndef OclMD_Vec3_h
 #define OclMD_Vec3_h
 
-#include "RealType.h"
 namespace OclMD {
 
 class Vec3{
@@ -37,13 +38,17 @@ public:
     }
     
     Real operator[](const int index) const {
-        assert(index>=0 && index<3);
-        return data_[index];
+        if(index>=0 && index<3)
+            return data_[index];
+        else
+           throw OclMDException("Vec3:: Array out of bound operator[]");
     }
     
     Real& operator[](const int index) {
-        assert(index>=0 && index<3);
-        return data_[index];
+        if(index>=0 && index<3)
+            return data_[index];
+        else
+           throw OclMDException("Vec3:: Array out of bound operator[]");
     }
 
     Vec3 operator=(const Vec3& lhs){

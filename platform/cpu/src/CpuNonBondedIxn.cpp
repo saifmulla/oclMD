@@ -7,3 +7,14 @@
 //
 
 #include "CpuNonBondedIxn.h"
+
+OclMD::CpuNonBondedIxn::CpuNonBondedIxn(){
+}
+
+OclMD::CpuNonBondedIxn::~CpuNonBondedIxn(){
+}
+
+void OclMD::CpuNonBondedIxn::calculateForces(){
+    
+}
+

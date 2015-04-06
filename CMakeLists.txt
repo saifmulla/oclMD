@@ -34,8 +34,8 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_D
 # start compiling each source file
 # this list is for the API source files
 SET(FILENAME_LIST "") #an empty list of cpp file names
-FILE(GLOB SRC_PROGS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_SUBDIRS}/*.cpp") #read into list of *.cpp filenames
 
+FILE(GLOB SRC_PROGS "${CMAKE_CURRENT_SOURCE_DIR}/${SRC_SUBDIRS}/*.cpp") #read into list of *.cpp filenames
 FOREACH(SRC_PROG ${SRC_PROGS})
     GET_FILENAME_COMPONENT(FILENAME ${SRC_PROG} NAME)
     SET(FILENAME_LIST ${FILENAME_LIST}  ${SRC_SUBDIRS}/${FILENAME})
@@ -43,13 +43,21 @@ ENDFOREACH(SRC_PROG ${SRC_PROGS})
 
 #this list is for the internal files
 SET(FILENAME_LIST ${FILENAME_LIST} ${CMAKE_CURRENT_SOURCE_DIR}/base/${SRC_SUBDIRS}/Platform.cpp)
-SET(FILENAME_LIST ${FILENAME_LIST} ${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/${SRC_SUBDIRS}/CpuPlatform.cpp)
+
+#inlude cpu platform src files
+FILE(GLOB CPUSRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/src/*.cpp")
+FOREACH(CPUSRC ${CPUSRC_FILES})
+    GET_FILENAME_COMPONENT(FILENAME ${CPUSRC} NAME)
+    SET(FILENAME_LIST ${FILENAME_LIST} platform/cpu/src/${FILENAME})
+ENDFOREACH(CPUSRC ${CPUSRC_FILES})
 
 ADD_LIBRARY(${SHARED_TARGET} SHARED ${FILENAME_LIST}) #use all the *.cpp codes to create a library
 
 #enable testing and add subdir 'tests'
 ADD_SUBDIRECTORY(tests)
-
+#add test directory for platforms
 ADD_SUBDIRECTORY(platform/tests)
+
+#testing is enabled
 ENABLE_TESTING()
 
