@@ -90,7 +90,7 @@ TEST(TestVec3, mag){
     Vec3 x(0.22,0.33,0.44);
     Real magsqr = MagSqr(x);
     Real expect = SQRT(magsqr);
-    Real mag = Mag(x);
+    Real mag = Mag(magsqr);
     ASSERT_EQ(expect,mag);
 }
 

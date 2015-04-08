@@ -69,6 +69,14 @@ public:
         return (data_[0] == rhs[0] && data_[1] == rhs[1] && data_[2] == rhs[2]);
     }
     
+    /// substraction operator
+    Vec3 operator-(Vec3& rhs){
+        data_[0] -= rhs[0];
+        data_[1] -= rhs[1];
+        data_[2] -= rhs[2];
+        return *this;
+    }
+    
     //scalar product
     Vec3 operator*(Real scalar){
         const Vec3& lhs = *this;
@@ -78,6 +86,18 @@ public:
     ~Vec3(){}
     
 };//end class
+    
+inline Real MagSqr(Vec3& data){
+    Real sum = 0.0;
+    sum += data[0] * data[0];
+    sum += data[1] * data[1];
+    sum += data[2] * data[2];
+    return sum;
+}
+    
+inline Real Mag(Real magsqr){
+    return SQRT(magsqr);
+}
     
 }//end namespace
 #endif

@@ -26,7 +26,6 @@ void OclMD::CpuNonBondedIxn::calculateForces(){
     forces[1] = Vec3(0,0,0);
     
     Vec3 rij = positions[0] - positions[1];
-    Real rsijmag = Mag(rij);
     
 }
 
