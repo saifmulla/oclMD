@@ -67,6 +67,33 @@ TEST(TestVec3, multiplication){
     ASSERT_EQ(0.0484,y[0]);
 }
 
+TEST(TestVec3, substract){
+    Vec3 x(0.22,0.33,0.44);
+    Vec3 y(0.22,0.33,0.44);
+    
+    Vec3 z = y - x;
+    ASSERT_EQ(0,z[0]);
+}
+
+TEST(TestVec3, magsqr){
+    Vec3 x(0.22,0.33,0.44);
+    Real expect = 0.0;
+    expect += x[0] * x[0];
+    expect += x[1] * x[1];
+    expect += x[2] * x[2];
+    Real magsqr = MagSqr(x);
+    ASSERT_EQ(expect,magsqr);
+}
+
+
+TEST(TestVec3, mag){
+    Vec3 x(0.22,0.33,0.44);
+    Real magsqr = MagSqr(x);
+    Real expect = SQRT(magsqr);
+    Real mag = Mag(x);
+    ASSERT_EQ(expect,mag);
+}
+
 TEST(TestVec3, omptest){
     int tid = omp_get_thread_num();
     int numthreads = omp_get_num_threads();

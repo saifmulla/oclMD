@@ -18,6 +18,9 @@ MESSAGE("Using CMAKE version ${cmv}, anything below 2.8 is not guarenteed to wor
 # create a list of of directories to be compiled at first
 SET(OCLMD_SRCSUB_DIR src base/src platform/cpu)
 
+#set c++11 flag if compiler supports
+#TODO: make appropriate checks for compiler
+ADD_DEFINITIONS(-std=c++11)
 #set preprocessor definations for internal realType
 IF(${REALTYPE})
     ADD_DEFINITIONS(-DREALTYPE=${REALTYPE})
