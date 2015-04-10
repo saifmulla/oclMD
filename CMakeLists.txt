@@ -20,7 +20,7 @@ SET(OCLMD_SRCSUB_DIR src base/src platform/cpu)
 
 #set c++11 flag if compiler supports
 #TODO: make appropriate checks for compiler
-ADD_DEFINITIONS(-std=c++11)
+ADD_DEFINITIONS(-std=c++11 -g -O1)
 #set preprocessor definations for internal realType
 IF(${REALTYPE})
     ADD_DEFINITIONS(-DREALTYPE=${REALTYPE})
