@@ -16,6 +16,7 @@
 
 #include <cassert>
 #include "RealType.h"
+#include "Vec3.h"
 #include "OclMDException.h"
 
 #ifndef OclMD_Tensor_h
@@ -92,6 +93,23 @@ public:
     Type xx(){
         return data_[0];
     }
+    
+    friend Tensor<Type> operator*(Vec3& v1,Vec3& v2){
+        return Tensor<T>(
+                         v1[0]*v2[0],v1[0]*v2[1],v1[0]*v2[2],
+                         v1[1]*v2[0],v1[1]*v2[1],v1[1]*v2[2],
+                         v1[2]*v2[0],v1[2]*v2[1],v1[2]*v2[2]
+                         );
+    }
 };
+// outer-product between two vectors
+template <class T>
+Tensor<T> outerProduct(const Vec3& v1,const Vec3& v2){
+    return Tensor<T>(
+                     v1[0]*v2[0],v1[0]*v2[1],v1[0]*v2[2],
+                     v1[1]*v2[0],v1[1]*v2[1],v1[1]*v2[2],
+                     v1[2]*v2[0],v1[2]*v2[1],v1[2]*v2[2]
+                     );
+}
 }
 #endif

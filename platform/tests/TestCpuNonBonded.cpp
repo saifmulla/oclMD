@@ -11,8 +11,16 @@
 #include "CpuNonBondedIxn.h"
 #include "gtest/gtest.h"
 
+using namespace OclMD;
+using namespace std;
 
-TEST(TestNonBonded,constructor){
+TEST(TestNonBondedIxn,constructor){
+    OclMD::CpuNonBondedIxn cpunonbonded;
+    std::vector<Vec3> positions(2);
+    std::vector<Vec3> forces(2);
+    std::vector<Real> pe(2);
+    std::vector<Tensor<double> > virial(2);
+    cpunonbonded.calculateForces(2,positions,forces,pe,virial);
 }
 
 int main(int argc, char *argv[]){

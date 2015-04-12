@@ -49,6 +49,8 @@ public:
         /// frozen - boolean value to determine if atom is frozen
         /// true if value of mass is zero else false
         bool frozen_;
+        /// fraction default will be 1.0 otherwise should be specified
+        Real fraction_;
         
         
         /**
@@ -67,7 +69,8 @@ public:
          * @siteID - zero based representation of atom in molecule
          * @moleculeID - molecule to which this atom belongs
          */
-        ParticleInfo(Vec3 siteRefPos, Real siteMass, Real siteCharge, int siteId, int moleculeId);
+        ParticleInfo(Vec3 siteRefPos, Real siteMass, Real siteCharge,
+                     Real fraction, int siteId, int moleculeId);
 
 //        ~ParticleInfo();
     };
@@ -167,7 +170,8 @@ public:
      */
     void addParticle(Real siteMass, int moleculeId,
                      Vec3 siteRefPos = Vec3(REALVAL,REALVAL,REALVAL),
-                     Real siteCharge = REALVAL, int siteId = 0);
+                     Real siteCharge = REALVAL, Real fraction = 1.0,
+                     int siteId = 0);
     
     /**
      * get the non bonded method by returning

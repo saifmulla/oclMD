@@ -28,7 +28,7 @@ TEST(TestNBF,LJPairs){
 
 TEST(TestNBF,ParticleInfo){
     Vec3 vector(0.12,0.6,0.3);
-    NonBondedForce::ParticleInfo minfo(vector,6.39,3.12,1,0);
+    NonBondedForce::ParticleInfo minfo(vector,6.39,3.12,1.0,1,0);
     ASSERT_EQ(6.39,minfo.siteMass_);
     ASSERT_FALSE(minfo.frozen_);
 }

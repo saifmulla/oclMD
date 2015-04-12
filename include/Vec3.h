@@ -57,32 +57,54 @@ public:
         data_[2] = lhs[2];
     }
     
-    Vec3 operator*(Vec3& rhs) {
-        data_[0] *= rhs[0];
-        data_[1] *= rhs[1];
-        data_[2] *= rhs[2];
-        return *this;
+    Vec3 operator*(const Vec3& rhs) {
+        return Vec3(data_[0] * rhs.data_[0],data_[1] * rhs.data_[1],data_[2] * rhs.data_[2]);
     }
     
     //equal operator
-    bool operator==(Vec3& rhs){
+    bool operator==(const Vec3& rhs){
         return (data_[0] == rhs[0] && data_[1] == rhs[1] && data_[2] == rhs[2]);
     }
     
+    /// addition operator
+    Vec3 operator+(const Vec3& rhs){
+        return Vec3(data_[0] + rhs.data_[0],data_[1] + rhs.data_[1],data_[2] + rhs.data_[2]);
+    }
+    
     /// substraction operator
-    Vec3 operator-(Vec3& rhs){
-        data_[0] -= rhs[0];
-        data_[1] -= rhs[1];
-        data_[2] -= rhs[2];
+    Vec3 operator-(const Vec3& rhs){
+        return Vec3(data_[0] - rhs.data_[0],data_[1] - rhs.data_[1],data_[2] - rhs.data_[2]);
+    }
+    
+    /// division operator
+    Vec3 operator/(const Real divisor){
+        return Vec3(data_[0]/divisor,data_[1]/divisor,data_[2]/divisor);
+    }
+    
+    /// addition equal operator or plus-equal operator
+    Vec3 operator+=(const Vec3& rhs){
+        data_[0] += rhs.data_[0];
+        data_[1] += rhs.data_[1];
+        data_[2] += rhs.data_[2];
         return *this;
     }
     
+    // negation operator
+    // to be worked on expressions such as v += -v2
+    Vec3 operator-() const {
+        Vec3 v;
+        v.data_[0] = -data_[0];
+        v.data_[1] = -data_[1];
+        v.data_[2] = -data_[2];
+        return v;
+    }
     //scalar product
-    Vec3 operator*(Real scalar){
+    Vec3 operator*(const Real scalar){
         const Vec3& lhs = *this;
         return Vec3(lhs[0]*scalar, lhs[1]*scalar, lhs[2]*scalar);
     }
     
+
     ~Vec3(){}
     
 };//end class

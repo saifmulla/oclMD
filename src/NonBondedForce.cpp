@@ -39,17 +39,20 @@ int OclMD::NonBondedForce::addLJPair(Real sigma, Real epsilon, Real rCut,
 
 void OclMD::NonBondedForce::addParticle(Real siteMass, int moleculeId,
                                         Vec3 siteRefPos, Real siteCharge,
-                                        int siteId){
-    moleculeList_.push_back(NonBondedForce::ParticleInfo(siteRefPos,siteMass,siteCharge,siteId,moleculeId));
+                                        Real fraction, int siteId){
+    moleculeList_.push_back(NonBondedForce::ParticleInfo(siteRefPos,siteMass,siteCharge,fraction,siteId,moleculeId));
 }
 OclMD::NonBondedForce::ParticleInfo::ParticleInfo()
 :siteReferencePosition_(Vec3(0.0,0.0,0.0)),siteMass_(0.0),
 siteCharge_(0.0),siteId_(-1){
 }
 
-OclMD::NonBondedForce::ParticleInfo::ParticleInfo(Vec3 siteRefPos, Real siteMass, Real siteCharge, int siteId, int moleculeId)
+OclMD::NonBondedForce::ParticleInfo::ParticleInfo(Vec3 siteRefPos, Real siteMass,
+                                                  Real siteCharge, Real fraction,
+                                                  int siteId, int moleculeId)
 :siteReferencePosition_(siteRefPos),siteMass_(siteMass),
-siteCharge_(siteCharge),siteId_(siteId),moleculeId_(moleculeId),frozen_(false){
+siteCharge_(siteCharge),siteId_(siteId),
+moleculeId_(moleculeId),frozen_(false),fraction_(fraction){
     if(siteMass_==REALVAL)
         frozen_ = true;
 }

@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include "Vec3.h"
 #include "Tensor.h"
 #include "gtest/gtest.h"
 
@@ -40,6 +41,16 @@ TEST(TestTensor,assignment2){
     ASSERT_EQ(0.002987,t[6]);
 }
 
+TEST(TestTensor,vectors){
+    std::vector<Tensor<double>> t(10);
+}
+
+TEST(TestTensor,outerproduct){
+    Vec3 x(2.0,3.0,4.0);
+    Vec3 y(2.0,3.0,4.0);
+    Tensor<double> t = outerProduct<double>(x,y);
+    ASSERT_EQ(6.0,t[1]);
+}
 
 int main(int argc, char *argv[]){
     ::testing::InitGoogleTest(&argc,argv);

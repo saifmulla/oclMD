@@ -63,8 +63,28 @@ TEST(TestVec3, scalarMultiply){
 TEST(TestVec3, multiplication){
     Vec3 x(0.22,0.33,0.44);
     Vec3 y(0.22,0.33,0.44);
-    y = y * x;
-    ASSERT_EQ(0.0484,y[0]);
+    Vec3 z = y * x;
+    ASSERT_EQ(0.0484,z[0]);
+    ASSERT_EQ(0.22,y[0]);
+}
+
+TEST(TestVec3, addition){
+    Vec3 x(0.22,0.33,0.44);
+    Vec3 y(0.22,0.33,0.44);
+    
+    Vec3 z = y + x;
+    ASSERT_EQ(0.44,z[0]);
+    ASSERT_EQ(0.22,y[0]);
+}
+
+TEST(TestVec3, addequal){
+    Vec3 x(0.22,0.33,0.44);
+    Vec3 y(0.22,0.33,0.44);
+    
+    y += x;
+    ASSERT_EQ(0.44,y[0]);
+    ASSERT_EQ(0.66,y[1]);
+    ASSERT_EQ(0.88,y[2]);
 }
 
 TEST(TestVec3, substract){
@@ -73,6 +93,27 @@ TEST(TestVec3, substract){
     
     Vec3 z = y - x;
     ASSERT_EQ(0,z[0]);
+    ASSERT_EQ(0.22,y[0]);
+}
+
+TEST(TestVec3,negation){
+    Vec3 x(0.22,0.33,0.44);
+    Vec3 y(0.22,0.33,0.44);
+    x += -y;
+    ASSERT_EQ(0.0,x[0]);
+}
+
+TEST(TestVec3,division){
+    Vec3 x(4.0,2,8);
+    Vec3 y = x/2;
+    ASSERT_EQ(2.0,y[0]);
+    ASSERT_EQ(1.0,y[1]);
+    ASSERT_EQ(4.0,y[2]);
+    
+    ASSERT_EQ(4.0,x[0]);
+    ASSERT_EQ(2.0,x[1]);
+    ASSERT_EQ(8.0,x[2]);
+
 }
 
 TEST(TestVec3, magsqr){
