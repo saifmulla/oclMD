@@ -12,6 +12,8 @@
 
 namespace OclMD {
     
+class ForceImpl;
+    
 class Force {
 private:
     int numForces;
@@ -19,9 +21,15 @@ public:
     Force():numForces(0){
     }
     
+    virtual ~Force(){}
+    
     int getNumForces() const;
     
     void setNumForces(int forces);
+
+protected:
+//    virtual ForceImpl* createImpl() = 0;
+    
 };
 }//end namespace oclMD
 

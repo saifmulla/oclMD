@@ -71,6 +71,18 @@ public:
          */
         ParticleInfo(Vec3 siteRefPos, Real siteMass, Real siteCharge,
                      Real fraction, int siteId, int moleculeId);
+        
+        //assignment operator
+//        ParticleInfo operator=(const ParticleInfo& x)
+//        {
+//            this->siteReferencePosition_ = x.siteReferencePosition_;
+//            this->siteMass_ = x.siteMass_;
+//            this->siteCharge_ = x.siteCharge_;
+//            this->fraction_ = x.fraction_;
+//            this->frozen_ = x.frozen_;
+//            this->siteId_ = x.siteId_;
+//            this->moleculeId_ = x.moleculeId_;
+//        }
 
 //        ~ParticleInfo();
     };
@@ -108,6 +120,7 @@ public:
         Real rCut_;/// cutoff radium between atoms
         Real rMin_;/// minimum cutoff radius between atoms
         Real dr_;/// dr
+        Real rCutSqr_; //square of cutoff radius
         struct Pairs pairs_; /// pair of atom index to calculate potential
         
         /// default constructor
@@ -187,6 +200,14 @@ public:
     /// getCutOff distance
     double getCutOffDistance() const;
     
+    /// getList of LJPairs
+    vector<OclMD::NonBondedForce::LJPairs>& getListLJPairs();
+    
+    /// get list of ParticleInfo
+    vector<NonBondedForce::ParticleInfo>& getListParticleInfo();
+    
+protected:
+//    ForceImpl* createImpl();
 private:
     NonBondedMethods method_;
     Real cutOffDistance_;

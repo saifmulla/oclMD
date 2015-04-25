@@ -63,8 +63,8 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
                 pE[i] += 0.5 * pe;
                 pE[j] += 0.5 * pe;
                 
-                // calculate virial contribution and add to virial of each atom
-                
+                /// calculate virial contribution and add to virial of each atom
+                Tensor<double> virialContribution = outerProduct<double>(forceContribution,rsIsJ);                
                 
                 
             }//end of rcutSqr check
@@ -74,6 +74,10 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
 }
 
 bool OclMD::CpuNonBondedIxn::pairRcutSqr(int a, int b, Real magSqr){
+    // check for id of each atom
+    int idI = 0;
+    int idJ = 0;
+    
     return true;
 }
 

@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include "Vec3.h"
 #include "NonBondedForce.h"
 #include "gtest/gtest.h"
@@ -37,8 +38,13 @@ TEST(TestNBF, addLJPair){
     NonBondedForce nbf(1);
     int size = nbf.addLJPair(0.12,0.0034,0.0,0.0,0.1,1,1);
     ASSERT_EQ(1,size);
-    size = nbf.addLJPair(0.12,0.0034,0.0,0.0,0.1,1,1);
+    size = nbf.addLJPair(0.12,0.0034,2.0,2.0,0.1,1,1);
     ASSERT_EQ(2,size);
+    
+    std::vector<NonBondedForce::LJPairs> info = nbf.getListLJPairs();
+    NonBondedForce::LJPairs& temp = info[1];
+    Real rcutsqr = temp.rCutSqr_;
+    ASSERT_EQ(4.0,rcutsqr);
 }
 
 TEST(TestNBF,addParticle){

@@ -33,7 +33,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 
 SET(SRC_SUBDIRS "src")
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/base/include ${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/include/internal ${CMAKE_CURRENT_SOURCE_DIR}/base/include ${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/include)
 # start compiling each source file
 # this list is for the API source files
 SET(FILENAME_LIST "") #an empty list of cpp file names
