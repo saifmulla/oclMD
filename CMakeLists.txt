@@ -20,7 +20,6 @@ SET(OCLMD_SRCSUB_DIR src base/src platform/cpu)
 
 #set c++11 flag if compiler supports
 #TODO: make appropriate checks for compiler
-ADD_DEFINITIONS(-std=c++11 -g -O1)
 #set preprocessor definations for internal realType
 IF(${REALTYPE})
     ADD_DEFINITIONS(-DREALTYPE=${REALTYPE})
@@ -30,6 +29,11 @@ IF(NOT CMAKE_BUILD_TYPE)
     SET(CMAKE_BUILD_TYPE Debug)
     #later add further compiler definition information add_definitions
 ENDIF(NOT CMAKE_BUILD_TYPE)
+
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+    ADD_DEFINITIONS(-std=c++11 -g -O1 -DFULLDEBUG)
+    MESSAGE("Building in debug mode")
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
 SET(SRC_SUBDIRS "src")
 
@@ -46,6 +50,7 @@ ENDFOREACH(SRC_PROG ${SRC_PROGS})
 
 #this list is for the internal files
 SET(FILENAME_LIST ${FILENAME_LIST} ${CMAKE_CURRENT_SOURCE_DIR}/base/${SRC_SUBDIRS}/Platform.cpp)
+SET(FILENAME_LIST ${FILENAME_LIST} ${CMAKE_CURRENT_SOURCE_DIR}/base/${SRC_SUBDIRS}/BaseImpl.cpp)
 
 #inlude cpu platform src files
 FILE(GLOB CPUSRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/src/*.cpp")

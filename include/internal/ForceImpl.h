@@ -12,8 +12,8 @@
 namespace OclMD {
 
 //forward declaration
-class ContextImpl;
 class Force;
+class ContextImpl;
 
 class ForceImpl {
 public:

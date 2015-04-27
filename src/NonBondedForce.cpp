@@ -58,7 +58,7 @@ siteCharge_(0.0),siteId_(-1){
 }
 
 OclMD::ForceImpl* OclMD::NonBondedForce::createImpl(){
-    return new NonBondedForceImpl(*this);
+    return new OclMD::NonBondedForceImpl(*this);
 }
 
 OclMD::NonBondedForce::ParticleInfo::ParticleInfo(Vec3 siteRefPos, Real siteMass,

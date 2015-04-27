@@ -10,7 +10,7 @@
 #include "System.h"
 
 OclMD::System::System()
-:numParticles_(0),moleculeSize_(1)
+:moleculeSize_(1),masses_(0),forces_(0)
 {
     dimensions_[0] = Vec3(2,0,0);
     dimensions_[1] = Vec3(0,2,0);
@@ -24,8 +24,9 @@ OclMD::System::System()
     }
 }
 
-OclMD::System::System(const Vec3 boxDimensions[], int numberofparticles, int moleculeSize)
-:numParticles_(numberofparticles),moleculeSize_(moleculeSize)
+OclMD::System::System(const Vec3 boxDimensions[], int moleculeSize)
+:moleculeSize_(moleculeSize),masses_(0),forces_(0)
+
 {
     moleculeMasses_ = (double*) malloc(sizeof(double)*moleculeSize);
     moleculeCharges_ = (double*) malloc(sizeof(double)*moleculeSize_);
@@ -61,13 +62,17 @@ void OclMD::System::getDimensions(Vec3& x,Vec3& y,Vec3& z) const {
     z = Vec3(dimensions_[2]);
 }
 
-int OclMD::System::getNumParticles() const {
-    return numParticles_;
+int OclMD::System::addParticle(Real mass){
+    masses_.push_back(mass);
+    return masses_.size()-1;
 }
 
-void OclMD::System::setNumParticles(int numberofparticles)
-{
-    numParticles_ = numberofparticles;
+int OclMD::System::getNumForces() const {
+    return forces_.size();
+}
+
+int OclMD::System::getNumParticles() const {
+    return masses_.size();
 }
 
 int OclMD::System::getMoleculeSize() const {

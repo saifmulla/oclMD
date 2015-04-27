@@ -5,9 +5,10 @@
 //  Created by Saif Mulla on 24/04/2015.
 //
 //
-
-#include "NonBondedForceImpl.h"
 #include "OclMDException.h"
+#include "ContextImpl.h"
+#include "NonBondedForceImpl.h"
+
 
 OclMD::NonBondedForceImpl::NonBondedForceImpl(NonBondedForce& owner)
 :owner_(owner),ljPairs_(0),listParticles_(0),maxRcut_(0.0),maxRcutSqr_(0.0),
@@ -21,6 +22,10 @@ OclMD::NonBondedForceImpl::~NonBondedForceImpl(){
 
 void OclMD::NonBondedForceImpl::initialise(ContextImpl& impl)
 {
+
+#ifdef FULLDEBUG
+    std::cout << "Initialising NonBondedForceImpl " << std::endl;
+#endif
     /**
      * reinitialise all the setting specified inside the nonBondedForce 
      * class by using the object copied in the owner object.

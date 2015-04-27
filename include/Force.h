@@ -28,7 +28,8 @@ public:
     void setNumForces(int forces);
 
 protected:
-//    virtual ForceImpl* createImpl() = 0;
+    friend class ContextImpl;
+    virtual ForceImpl* createImpl() = 0;
     
 };
 }//end namespace oclMD

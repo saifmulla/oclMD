@@ -13,29 +13,30 @@
 #include <vector>
 #include <stdlib.h>
 #include "Vec3.h"
+#include "Force.h"
 
 
 namespace OclMD {
 
-    class Force;
 class System {
 
 private:
     Vec3 dimensions_[3];
-    int numParticles_;
+//    int numParticles_;
     int moleculeSize_;
     double* moleculeMasses_;
     double* moleculeCharges_;
     std::vector<Force*> forces_;
+    std::vector<Real> masses_;
     
 public:
     System();
-    System(const Vec3 boxDimensions[], const int numberofparticles, const int moleculesize);
+    System(const Vec3 boxDimensions[], const int moleculesize);
     ~System();
     void getDimensions(Vec3& x,Vec3& y,Vec3& z) const;
     void setDimensions(const Vec3& x,const Vec3& y,const Vec3& z);
+    int addParticle(Real mass);
     int getNumParticles() const;
-    void setNumParticles(int numberofparticles);
     int getMoleculeSize() const;
     void setMoleculeSize(int size) {
         moleculeSize_ = size;
@@ -48,6 +49,7 @@ public:
         forces_.push_back(force);
         return forces_.size()-1;
     }
+    int getNumForces() const;
     const Force& getForce(int index) const;
     Force& getForce(int index);
 

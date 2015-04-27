@@ -53,7 +53,7 @@ TEST(TestNBF, checkImpl){
     ASSERT_EQ(1,size);
     size = nbf.addLJPair(0.12,0.0034,2.0,2.0,0.1,1,1);
     ASSERT_EQ(2,size);
-    ForceImpl* tempforce = static_cast<ForceImpl*>(nbf.createImpl());
+//    ForceImpl* tempforce = static_cast<ForceImpl*>(nbf.createImpl());
 //    tempforce->initialise();
 }
 

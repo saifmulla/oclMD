@@ -206,7 +206,7 @@ public:
     /// get list of ParticleInfo
     vector<NonBondedForce::ParticleInfo>& getListParticleInfo();
     
-//protected:
+protected:
     ForceImpl* createImpl();
 private:
     NonBondedMethods method_;

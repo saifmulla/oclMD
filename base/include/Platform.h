@@ -20,16 +20,17 @@ public:
     virtual ~Platform();
     virtual const std::string& getName() const = 0;
     virtual bool supportsDoublePrecision() const = 0;
+    
+    Platform& getPlatform();
     /**
      * register a core platform, in which case it 
      * is CpuPlatform by default
      */
-//    static void registerPlatform(Platform* platform);
-/*
+    static void registerPlatform(Platform* platform);
 private:
-    std::string platformName_;
-    static std::vector<Platform*>& getPlatforms();
-*/
+    static Platform* platformType;
+//    std::string platformName_;
+//    static std::vector<Platform*>& getPlatforms();
 };
     
 }//end namespace

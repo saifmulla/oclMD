@@ -7,9 +7,25 @@
 //
 
 #include "Platform.h"
+using namespace OclMD;
 
-// destructor implementation
-OclMD::Platform::~Platform(){}
+/// globally initialise static variable platformType
+Platform* Platform::platformType = 0;
+
+/// destructor implementation
+OclMD::Platform::~Platform(){
+}
+
+/// static function to set the Platform variable which
+/// actually sets the derived platform used.
+void OclMD::Platform::registerPlatform(Platform* platform){
+    platformType = platform;
+}
+
+Platform& OclMD::Platform::getPlatform(){
+    return *platformType;
+}
+
 
 
 
