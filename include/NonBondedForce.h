@@ -206,8 +206,8 @@ public:
     /// get list of ParticleInfo
     vector<NonBondedForce::ParticleInfo>& getListParticleInfo();
     
-protected:
-//    ForceImpl* createImpl();
+//protected:
+    ForceImpl* createImpl();
 private:
     NonBondedMethods method_;
     Real cutOffDistance_;

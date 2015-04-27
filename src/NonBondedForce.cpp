@@ -7,6 +7,7 @@
 //
 #include "Force.h"
 #include "NonBondedForce.h"
+#include "NonBondedForceImpl.h"
 
 OclMD::NonBondedForce::NonBondedForce(int moleculeTypes):method_(CutOffPeriodic),cutOffDistance_(2.0),numMoleculeTypes_(moleculeTypes)
 {
@@ -55,10 +56,11 @@ OclMD::NonBondedForce::ParticleInfo::ParticleInfo()
 :siteReferencePosition_(Vec3(0.0,0.0,0.0)),siteMass_(0.0),
 siteCharge_(0.0),siteId_(-1){
 }
-//
-//ForceImpl* OclMD::NonBondedForce::createImpl(){
-//    return new NonBondedForceImpl(*this);
-//}
+
+OclMD::ForceImpl* OclMD::NonBondedForce::createImpl(){
+    return new NonBondedForceImpl(*this);
+}
+
 OclMD::NonBondedForce::ParticleInfo::ParticleInfo(Vec3 siteRefPos, Real siteMass,
                                                   Real siteCharge, Real fraction,
                                                   int siteId, int moleculeId)
@@ -68,14 +70,6 @@ moleculeId_(moleculeId),frozen_(false),fraction_(fraction){
     if(siteMass_==REALVAL)
         frozen_ = true;
 }
-
-//OclMD::NonBondedForce::ParticleInfo operator=(const OclMD::NonBondedForce::ParticleInfo& x)
-//:siteReferencePosition_(x.siteReferencePosition_),
-//siteMass_(x.siteMass_),siteCharge_(x.siteCharge_),
-//fraction_(x.fraction_),frozen_(x.frozen_),
-//siteId_(x.siteId_),moleculeId_(x.moleculeId_){
-//    
-//}
 
 //OclMD::NonBondedForce::ParticleInfo::~ParticleInfo(){
 //    std::cout << "invoked ParticleInfo destructor" << std::endl;

@@ -47,6 +47,16 @@ TEST(TestNBF, addLJPair){
     ASSERT_EQ(4.0,rcutsqr);
 }
 
+TEST(TestNBF, checkImpl){
+    NonBondedForce nbf(1);
+    int size = nbf.addLJPair(0.12,0.0034,0.0,0.0,0.1,1,1);
+    ASSERT_EQ(1,size);
+    size = nbf.addLJPair(0.12,0.0034,2.0,2.0,0.1,1,1);
+    ASSERT_EQ(2,size);
+    ForceImpl* tempforce = static_cast<ForceImpl*>(nbf.createImpl());
+//    tempforce->initialise();
+}
+
 TEST(TestNBF,addParticle){
     NonBondedForce nbf(1);
     nbf.addParticle(6.39,1);

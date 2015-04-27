@@ -11,7 +11,7 @@
 
 OclMD::NonBondedForceImpl::NonBondedForceImpl(NonBondedForce& owner)
 :owner_(owner),ljPairs_(0),listParticles_(0),maxRcut_(0.0),maxRcutSqr_(0.0),
-moleculeSize_(1),moleculeTypes_(1)
+siteIds_(0)
 {
 }
 
@@ -30,17 +30,33 @@ void OclMD::NonBondedForceImpl::initialise(ContextImpl& impl)
     int particleInfoSize = owner_.getListParticleInfo().size();
     /// now allocate memory for the list of ParticleInfo array
     listParticles_ = new std::vector<NonBondedForce::ParticleInfo>(particleInfoSize);
+    /// initialise siteId list
+    siteIds_ = (int*) malloc(sizeof(int)*particleInfoSize);
     /// TODO: later ensure that check the mass of each particle to determine moleculeID
     
     for (int pi = 0; pi<particleInfoSize; pi++) {
         const NonBondedForce::ParticleInfo& tempPI = owner_.getListParticleInfo()[pi];
-        (*listParticles_)[pi] = OclMD::NonBondedForce::ParticleInfo(Vec3(tempPI.siteReferencePosition_),
+        (*listParticles_)[pi] = OclMD::NonBondedForce::ParticleInfo(
+                                          Vec3(tempPI.siteReferencePosition_),
                                           tempPI.siteMass_,
                                           tempPI.siteCharge_,
                                           tempPI.fraction_,
                                           tempPI.siteId_,
                                           tempPI.moleculeId_);
+        siteIds_[pi] = pi;
     }
+    
+    /// now setup LJPairs information
+    particleInfoSize = owner_.getListLJPairs().size();
+    /// lazy initialise memory
+    ljPairs_ = new LJInfo*[particleInfoSize];
+    for (int lj = 0; lj<particleInfoSize; lj++) {
+        const NonBondedForce::LJPairs& templj = owner_.getListLJPairs()[lj];
+        ljPairs_[lj] = new LJInfo[1];
+        ljPairs_[lj][0] = LJInfo(templj.sigma_,templj.epsilon_,templj.rMin_,
+                                 templj.dr_,templj.rCut_,templj.rCutSqr_);
+    }
+    
 }
 
 Real OclMD::NonBondedForceImpl::calculateForces(ContextImpl& impl){
