@@ -18,7 +18,9 @@ OclMD::ContextImpl::ContextImpl(System& system, Platform* platform):system_(syst
         CpuPlatform* platform = new CpuPlatform();
         platform_ = platform;
     }
-    Platform::registerPlatform(platform);
+    Platform::registerPlatform(platform_);
+    platform_->createData(*this);
+    
     std::string name = platform_->getPlatform().getName();
     std::cout << "Using Platform " << name.c_str() << std::endl;
     std::cout << "Initialising system with " << system.getNumParticles() << " Particles " << std::endl;
@@ -27,8 +29,25 @@ OclMD::ContextImpl::ContextImpl(System& system, Platform* platform):system_(syst
         forceImpls_.push_back(system.getForce(fi).createImpl());
         forceImpls_[fi]->initialise(*this);
     }
+    
+    /// once everything initialised
 }
 
+void* OclMD::ContextImpl::getPlatformData() const {
+    return platformData_;
+}
+
+void OclMD::ContextImpl::setPlatformData(void* data){
+    platformData_ = data;
+}
 void OclMD::ContextImpl::setPositions(std::vector<Vec3>& positions){
     
+}
+
+void OclMD::ContextImpl::CalculateForcesandEnergy(){
+    
+}
+
+OclMD::System& OclMD::ContextImpl::getSystem(){
+    return system_;
 }

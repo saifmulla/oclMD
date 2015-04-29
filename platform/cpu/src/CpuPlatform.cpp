@@ -8,13 +8,24 @@
 //
 
 #include "CpuPlatform.h"
+
 using namespace std;
+
 OclMD::CpuPlatform::CpuPlatform(){
     
 }
 
 bool OclMD::CpuPlatform::supportsDoublePrecision() const {
     return true;
+}
+
+void OclMD::CpuPlatform::createData(ContextImpl& context) const {
+    context.setPlatformData(new CpuPlatform::PlatformData(context.getSystem().getNumParticles()));
+}
+
+void OclMD::CpuPlatform::deleteData(ContextImpl& context) const {
+    CpuPlatform::PlatformData* data = reinterpret_cast<PlatformData*>(context.getPlatformData());
+    delete data;
 }
 
 OclMD::CpuPlatform::PlatformData::PlatformData(int numParticles)
@@ -25,6 +36,10 @@ OclMD::CpuPlatform::PlatformData::PlatformData(int numParticles)
 }
 
 OclMD::CpuPlatform::PlatformData::~PlatformData(){
+#ifdef FULLDEBUG
+    std::cout<< "PlatformData deleted" << std::endl;
+#endif
+    
     delete (vector<Vec3>*) positions_;
     delete (vector<Vec3>*) forces_;
     delete (Vec3*) periodicBoxSize_;

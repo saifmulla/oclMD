@@ -26,6 +26,14 @@ Platform& OclMD::Platform::getPlatform(){
     return *platformType;
 }
 
+//void Platform::createData(ContextImpl& context) const {
+//    
+//}
+//
+//void Platform::deleteData(ContextImpl& context) const {
+//    
+//}
+
 
 
 

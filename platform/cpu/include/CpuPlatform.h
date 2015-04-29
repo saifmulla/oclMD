@@ -23,6 +23,9 @@
 #include "RealType.h"
 #include "Vec3.h"
 #include "Platform.h"
+#include "ContextImpl.h"
+#include "System.h"
+
 #include <vector>
 #include <iostream>
 
@@ -32,12 +35,16 @@ class CpuPlatform : public Platform {
 public:
     /// forward declaration for obtaining platform data
     class PlatformData;
+
     /**
      * Constructor which is presently left blank with no significant
      * initilalisations
      */
     CpuPlatform();
-    
+
+    /// default destructor
+    ~CpuPlatform(){}
+
     /// this a implementation of pure virtual function
     const std::string& getName() const {
         static const std::string name = "CPU";
@@ -47,8 +54,11 @@ public:
     /// definition of pure virtual function in this class
     bool supportsDoublePrecision() const;
     
-    /// default destructor
-    ~CpuPlatform(){}
+    /// create internal datastructure for platformData
+    void createData(ContextImpl& context) const;
+    
+    /// delete the internal datastructure for platformdata
+    void deleteData(ContextImpl& context) const;
 };
 
 /**

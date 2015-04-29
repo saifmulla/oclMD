@@ -14,12 +14,15 @@
 
 namespace OclMD {
 
+class ContextImpl;
 class Platform {
    
 public:
     virtual ~Platform();
     virtual const std::string& getName() const = 0;
     virtual bool supportsDoublePrecision() const = 0;
+    virtual void createData(ContextImpl& context) const = 0;
+    virtual void deleteData(ContextImpl& context) const = 0;
     
     Platform& getPlatform();
     /**

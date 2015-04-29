@@ -36,8 +36,17 @@ class ContextImpl {
 public:
     ContextImpl(System& system, Platform* platform);
     
+    void CalculateForcesandEnergy();
     /// set data functions
     void setPositions(std::vector<Vec3>& positions);
+    
+    System& getSystem();
+    
+    /// set the datastructure for internal platform
+    void setPlatformData(void* data);
+    
+    /// get the datastructure of platform from internal platform
+    void* getPlatformData() const;
 private:
     System& system_;
     std::vector<OclMD::ForceImpl*> forceImpls_;
