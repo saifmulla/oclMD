@@ -44,6 +44,10 @@ void OclMD::ContextImpl::setPositions(std::vector<Vec3>& positions){
     
 }
 
+void OclMD::ContextImpl::getForces(std::vector<Vec3>& forces){
+    
+}
+
 void OclMD::ContextImpl::CalculateForcesandEnergy(){
     
 }

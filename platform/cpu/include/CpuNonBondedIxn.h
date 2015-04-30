@@ -10,8 +10,10 @@
 #define __OclMD__CpuNonBondedIxn__
 
 #include <vector>
+#include "RealType.h"
 #include "Vec3.h"
 #include "Tensor.h"
+#include "NonBondedForceImpl.h"
 
 namespace OclMD {
 
@@ -19,7 +21,7 @@ typedef Vec3 vector;//just temporarily think it as vector for user friendlyness
 typedef Tensor<double> tensor; // type define a tensor to simplify it
 class CpuNonBondedIxn {
 public:
-    CpuNonBondedIxn();//default constructor
+    CpuNonBondedIxn(const NonBondedForceImpl::LJInfo** ljinfo);//default constructor
     ~CpuNonBondedIxn();//destructor
     /**
      * @function calculateForces
@@ -35,8 +37,6 @@ public:
                          std::vector<Vec3>& forces,
                          std::vector<Real>& pE,
                          std::vector<tensor>& virial);
-//                        , std::vector<int>& atomId,
-//                         std::vector<int>& moleculeId);
     
     /**
      * @function pairRcutSqr
@@ -49,7 +49,7 @@ public:
      * rcut Square for the LJ potential between the two sites if withing
      * range return true else false
      */
-    bool pairRcutSqr(int a, int b,Real magSqr);
+//    bool pairRcutSqr(int a, int b,Real magSqr);
     
     /**
      * @function forceLJPairs
@@ -63,7 +63,7 @@ public:
      * reference link - http://chemwiki.ucdavis.edu/Physical_Chemistry/Intermolecular_Forces/Lennard-Jones_Potential
      *
      */
-    Real forceLJPairs(int a, int b, Real magSqr);
+    Real forceLJPairs(const Real rij, const Real sigma, const Real epsilon);
     
     /**
      * @function energyLJPairs
@@ -78,14 +78,9 @@ public:
      * 4*epsilon * ((sigma/magsqr)^12 - (sigma/magsqr)^6)
      *
      */
-    Real energyLJPairs(int a, int b, Real magSqr);
-     
-     
-     
-     
-     
-     
-     
+    Real energyLJPairs(const Real rsIsJmagSqr, const Real sigma, const Real epsilon);
+private:
+    const NonBondedForceImpl::LJInfo** ljPairs;
 };
 }
 #endif /* defined(__OclMD__CpuNonBondedIxn__) */

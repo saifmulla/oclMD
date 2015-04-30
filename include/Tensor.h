@@ -88,6 +88,18 @@ public:
             throw OclMDException("Tensor: Array Index out of bound operator[]");
     }
     
+    Tensor operator+=(const Tensor& rhs){
+        data_[0] += rhs[0];
+        data_[1] += rhs[1];
+        data_[2] += rhs[2];
+        data_[3] += rhs[3];
+        data_[4] += rhs[4];
+        data_[5] += rhs[5];
+        data_[6] += rhs[6];
+        data_[7] += rhs[7];
+        data_[8] += rhs[8];
+    }
+    
     /// accessor functions
     
     Type xx(){

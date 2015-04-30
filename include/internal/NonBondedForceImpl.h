@@ -56,6 +56,9 @@ public:
     LJInfo* getLJInfo(int i,int j){
         return &ljPairs_[i][j];
     }
+    
+    LJInfo** getLJInfo() const;
+    
 private:
     NonBondedForce owner_;
     LJInfo** ljPairs_;

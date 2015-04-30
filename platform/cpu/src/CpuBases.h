@@ -6,7 +6,9 @@
 #include "AbstractBases.h"
 #include "System.h"
 #include "ContextImpl.h"
+#include "NonBondedForceImpl.h"
 #include "CpuPlatform.h"
+#include "CpuNonBondedIxn.h"
 
 namespace OclMD {
 //
@@ -49,23 +51,28 @@ public:
     void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z);
     
 private:
-//    OclMD::CpuPlatform::PlaformData* pData_;
+//    CpuPlatform::PlaformData* pData_;
 };
 
     
 /**
  * classname CpuCalculateNonBondedForceBase
  */
-
+//class CpuNonBondedIxn;
 class CpuCalculateNonBondedForceBase : public CalculateNonBondedForceBase {
 public:
     CpuCalculateNonBondedForceBase(const Platform& platform, std::string className) : CalculateNonBondedForceBase(platform,className){
         
     }
     
-    void initialise(const System& system, const NonBondedForce& force);
+    void initialise(const System& system,
+                    const NonBondedForceImpl& force
+                    );
     
     Real calculate(ContextImpl& context);
+    
+private:
+    CpuNonBondedIxn* nonbondedixn;
 };
 
 } // end namespace

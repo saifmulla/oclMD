@@ -8,19 +8,32 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "CpuNonBondedIxn.h"
+#include "Vec3.h"
+#include "System.h"
+#include "NonBondedForce.h"
+#include "CpuPlatform.h"
+#include "ContextImpl.h"
+
 #include "gtest/gtest.h"
 
 using namespace OclMD;
 using namespace std;
 
-TEST(TestNonBondedIxn,constructor){
-    OclMD::CpuNonBondedIxn cpunonbonded;
-    std::vector<Vec3> positions(2);
-    std::vector<Vec3> forces(2);
-    std::vector<Real> pe(2);
-    std::vector<Tensor<double> > virial(2);
-    cpunonbonded.calculateForces(2,positions,forces,pe,virial);
+TEST(TestNonBondedIxn,oneatomljpair){
+    System system;
+    system.addParticle(1.0);
+    system.addParticle(1.0);
+    NonBondedForce* nb = new NonBondedForce();
+    nb->addParticle(1.0,0);
+    nb->addLJPair(1.2,1.0,2.0,1.0,1.0,0,0);
+    system.addForce(nb);
+    CpuPlatform* platform = new CpuPlatform();
+    ContextImpl context(system,platform);
+    vector<Vec3> positions(2);
+    positions[0] = Vec3(0,0,0);
+    positions[1] = Vec3(2,0,0);
+    context.setPositions(positions);
+    
 }
 
 int main(int argc, char *argv[]){

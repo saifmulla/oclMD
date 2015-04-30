@@ -19,6 +19,9 @@ siteIds_(0)
 OclMD::NonBondedForceImpl::~NonBondedForceImpl(){
 }
 
+OclMD::NonBondedForceImpl::LJInfo** OclMD::NonBondedForceImpl::getLJInfo() const {
+    return ljPairs_;
+}
 
 void OclMD::NonBondedForceImpl::initialise(ContextImpl& impl)
 {

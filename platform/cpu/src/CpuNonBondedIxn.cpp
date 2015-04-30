@@ -8,17 +8,21 @@
 
 #include "CpuNonBondedIxn.h"
 
-OclMD::CpuNonBondedIxn::CpuNonBondedIxn(){
+OclMD::CpuNonBondedIxn::CpuNonBondedIxn(const OclMD::NonBondedForceImpl::LJInfo** ljinfo):ljPairs(ljinfo){
 }
 
 OclMD::CpuNonBondedIxn::~CpuNonBondedIxn(){
+    if(ljPairs!=NULL)
+        delete ljPairs;
 }
 
 void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
                                              std::vector<Vec3>& positions,
                                              std::vector<Vec3>& forces,
                                              std::vector<Real>& pE,
-                                             std::vector<tensor>& virial){
+                                             std::vector<tensor>& virial
+                                             )
+{
 
     for (int i=0; i<numberParticles; i++)
     {
@@ -42,11 +46,17 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
              * obtained by supplying the atom id to get appropriate 
              * rCutSqr from the list if available
              */
-            if(pairRcutSqr(i,j,rsIsJMagSq))
+            const OclMD::NonBondedForceImpl::LJInfo& lj = ljPairs[0][0];
+            /**
+             * check if the distance IJ magSquare is less than the 
+             * rCutSqr defined for the LJ pair if it is within
+             * then perform pair-wise force calculation
+             */
+            if(rsIsJMagSq < lj.rCutSqr)
             {
                 Real rsIsJMag = Mag(rsIsJMagSq);
                 
-                Real force = forceLJPairs(i,j,rsIsJMagSq);
+                Real force = forceLJPairs(rsIsJMagSq,lj.sigma,lj.epsilon);
                 
                 vector forceContribution = (rsIsJ/rsIsJMagSq) * fraction;
                 
@@ -59,12 +69,14 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
                  * supply atom ids to determine sigma and epsilon based on 
                  * pairs
                  */
-                Real pe = fraction * energyLJPairs(0,0,rsIsJMag);
+                Real pe = fraction * energyLJPairs(rsIsJMag,lj.sigma,lj.epsilon);
                 pE[i] += 0.5 * pe;
                 pE[j] += 0.5 * pe;
                 
                 /// calculate virial contribution and add to virial of each atom
-                Tensor<double> virialContribution = outerProduct<double>(forceContribution,rsIsJ);                
+                Tensor<double> virialContribution = outerProduct<double>(forceContribution,rsIsJ);
+                virial[i] += virialContribution;
+                virial[j] += virialContribution;
                 
                 
             }//end of rcutSqr check
@@ -73,20 +85,34 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
     }
 }
 
-bool OclMD::CpuNonBondedIxn::pairRcutSqr(int a, int b, Real magSqr){
-    // check for id of each atom
-    int idI = 0;
-    int idJ = 0;
+Real OclMD::CpuNonBondedIxn::forceLJPairs(const Real rij,
+                                          const Real sigma,
+                                          const Real epsilon)
+{
+    Real ps6 = POW(sigma,6);
+    Real ps12 = POW(sigma,12);
+    Real rij13 = POW(rij,13);
+    Real rij7 = POW(rij,7);
     
-    return true;
+    Real numerator1 = -48 * epsilon * ps12;
+    numerator1 /= rij13;
+    Real numerator2 = 24 * epsilon * ps6;
+    numerator2 /= rij7;
+    /// return the result back
+    return (numerator1 + numerator2);
 }
 
-Real OclMD::CpuNonBondedIxn::forceLJPairs(int a, int b, Real magSqr){
-    return 1.0;
-}
-
-Real OclMD::CpuNonBondedIxn::energyLJPairs(int a, int b, Real magSqr){
-    return 1.0;
+Real OclMD::CpuNonBondedIxn::energyLJPairs(const Real rij,
+                                           const Real sigma,
+                                           const Real epsilon){
+    Real ps6 = POW(sigma,6);
+    Real ps12 = POW(sigma,12);
+    Real rij12 = POW(rij,12);
+    Real rij6 = POW(rij,6);
+    
+    Real result = ps12 / rij12;
+    result -= (ps6/rij6);
+    return result;
 }
 
 

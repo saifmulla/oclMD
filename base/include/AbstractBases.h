@@ -25,7 +25,7 @@
 #include "BaseImpl.h"
 #include "ContextImpl.h"
 #include "System.h"
-#include "NonBondedForce.h"
+#include "NonBondedForceImpl.h"
 
 
 namespace OclMD {
@@ -137,7 +137,7 @@ public:
         
     }
     
-    virtual void initialise(const System& system, const NonBondedForce& force) = 0;
+    virtual void initialise(const System& system, const NonBondedForceImpl& forceImpl) = 0;
     
     virtual Real calculate(ContextImpl& context) = 0;
 };

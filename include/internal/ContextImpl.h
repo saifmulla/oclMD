@@ -19,11 +19,12 @@
  * datastructure required to successfully run a simulation
  */
 
+#include <vector>
+#include <string>
 #include "Platform.h"
 #include "CpuPlatform.h"
 #include "Vec3.h"
-#include <vector>
-#include <string>
+#include "Base.h"
 
 namespace OclMD {
 
@@ -40,6 +41,8 @@ public:
     /// set data functions
     void setPositions(std::vector<Vec3>& positions);
     
+    void getForces(std::vector<Vec3>& forces);
+    
     System& getSystem();
     
     /// set the datastructure for internal platform
@@ -52,6 +55,7 @@ private:
     std::vector<OclMD::ForceImpl*> forceImpls_;
     Platform* platform_;
     void* platformData_;
+//    OclMD::Base forceBase, dataBase;
 };
     
 }// end namespace

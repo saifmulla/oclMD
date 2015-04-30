@@ -22,6 +22,7 @@
 
 #include "RealType.h"
 #include "Vec3.h"
+#include "Tensor.h"
 #include "Platform.h"
 #include "ContextImpl.h"
 #include "System.h"
@@ -84,6 +85,8 @@ public:
     Real time_;
     void* positions_;
     void* forces_;
+    void* virial_;
+    void* pE_;
     void* periodicBoxSize_;
 };
 }//end namespace

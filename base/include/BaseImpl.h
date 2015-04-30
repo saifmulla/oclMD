@@ -2,6 +2,7 @@
 #define OclMD_BaseImpl_h
 
 #include <string>
+#include <cassert>
 #include "Platform.h"
 
 namespace OclMD {
@@ -22,7 +23,7 @@ public:
      */
     BaseImpl(const Platform& platform, std::string name);
     virtual ~BaseImpl() {
-//        assert(referenceCount == 0);
+        assert(referenceCounter == 0);
     }
     /**
      * Get the name of this Base.
@@ -32,11 +33,17 @@ public:
      * Get the Platform that created this BaseImpl.
      */
     const Platform& getPlatform();
+    
+    int incrementCounter();
+    
+    int decrementCounter();
+    
+    int getReferenceCounter() const;
 private:
-//    friend class Base;
+    friend class Base;
     const Platform* platform;
     std::string funcName;
-//    int referenceCount;
+    int referenceCounter;
 };
     
 } // namespace OclMD
