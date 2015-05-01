@@ -1,5 +1,6 @@
 
 #include "oclmd/Base.h"
+#include "oclmd/BaseInterfaces.h"
 #include "oclmd/System.h"
 #include "oclmd/Force.h"
 #include "oclmd/impl/ContextImpl.h"
@@ -31,9 +32,18 @@ OclMD::ContextImpl::ContextImpl(System& system, Platform* platform):system_(syst
         forceImpls_[fi]->initialise(*this);
     }
     
+    /// set periodic box for internal
+    OclMD::Vec3 tempPeriodicBox[3];
+    system.getDimensions(tempPeriodicBox[0],tempPeriodicBox[1],tempPeriodicBox[2]);
     /// once everything initialised
 }
 
+OclMD::ContextImpl::~ContextImpl(){
+    for (int i = 0; i<forceImpls_.size(); i++)
+        delete forceImpls_[i];
+    /// delete internal data created in platform
+    platform_->deleteData(*this);
+}
 void* OclMD::ContextImpl::getPlatformData() const {
     return platformData_;
 }
@@ -41,6 +51,7 @@ void* OclMD::ContextImpl::getPlatformData() const {
 void OclMD::ContextImpl::setPlatformData(void* data){
     platformData_ = data;
 }
+
 void OclMD::ContextImpl::setPositions(std::vector<Vec3>& positions){
     
 }

@@ -38,6 +38,9 @@ class ContextImpl {
 public:
     ContextImpl(System& system, Platform* platform);
     
+    /// destructor
+    ~ContextImpl();
+    
     void CalculateForcesandEnergy();
     /// set data functions
     void setPositions(std::vector<Vec3>& positions);

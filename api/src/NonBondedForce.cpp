@@ -6,7 +6,7 @@
 //
 //
 #include "oclmd/NonBondedForce.h"
-//#include "oclmd/NonBondedForceImpl.h"
+#include "oclmd/impl/NonBondedForceImpl.h"
 
 OclMD::NonBondedForce::NonBondedForce(int moleculeTypes)
 :method_(CutOffPeriodic),cutOffDistance_(2.0),numMoleculeTypes_(moleculeTypes)
@@ -58,7 +58,7 @@ siteCharge_(0.0),siteId_(-1){
 }
 
 OclMD::ForceImpl* OclMD::NonBondedForce::createImpl(){
-//    return new OclMD::NonBondedForceImpl(*this);
+    return new OclMD::NonBondedForceImpl(*this);
 }
 
 OclMD::NonBondedForce::ParticleInfo::ParticleInfo(Vec3 siteRefPos, Real siteMass,

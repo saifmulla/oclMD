@@ -8,24 +8,24 @@ OclMD::Base::Base(OclMD::BaseImpl* impl) : impl(impl){
 }
 
 OclMD::Base::Base(const Base& copy) : impl(copy.impl){
-    impl->incrementCounter();
+    impl->referenceCounter;
 }
 
 OclMD::Base::~Base(){
     if(impl){
 #ifdef FULLDEBUG
         std::cout << "Destructor in Base, reference counter "
-        << impl->getReferenceCounter() << std::endl;
+        << impl->referenceCounter << std::endl;
 #endif
         impl->decrementCounter();
-        if(impl->getReferenceCounter() == 0)
+        if(impl->referenceCounter == 0)
             delete impl;
     }
 }
 
 OclMD::Base& OclMD::Base::operator=(const OclMD::Base& copy){
     impl = copy.impl;
-    impl->incrementCounter();
+    impl->referenceCounter++;
     return *this;
 }
 

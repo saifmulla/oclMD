@@ -20,12 +20,12 @@
 
 #include <string>
 #include <vector>
+#include "oclmd/BaseImpl.h"
 #include "oclmd/RealType.h"
 #include "oclmd/Vec3.h"
 #include "oclmd/System.h"
 #include "oclmd/impl/ContextImpl.h"
-#include "oclmd/BaseImpl.h"
-//#include "NonBondedForceImpl.h"
+#include "oclmd/impl/NonBondedForceImpl.h"
 
 
 namespace OclMD {
@@ -127,21 +127,21 @@ public:
     virtual void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z) const = 0;
 };
  
-//
-//class CalculateNonBondedForceBase : public BaseImpl {
-//public:
-//    static std::string className(){
-//        return "CalculateNonBondedForceBase";
-//    }
-//    
-//    CalculateNonBondedForceBase(const Platform& platform, std::string name) : BaseImpl(platform,name){
-//        
-//    }
-//    
-//    virtual void initialise(const System& system, const NonBondedForceImpl& forceImpl) = 0;
-//    
-//    virtual Real calculate(ContextImpl& context) = 0;
-//};
+
+class BaseCalculateNonBondedForce : public BaseImpl {
+public:
+    static std::string className(){
+        return "BaseCalculateNonBondedForce";
+    }
+    
+    BaseCalculateNonBondedForce(const Platform& platform, std::string name) : BaseImpl(platform,name){
+        
+    }
+    
+    virtual void initialise(const System& system, const NonBondedForceImpl& forceImpl) = 0;
+    
+    virtual Real calculate(ContextImpl& context) = 0;
+};
     
 }
 #endif
