@@ -30,7 +30,7 @@ SET(ADDITIONAL_COMP_FLAGS "")
 #set c++11 flag if compiler supports
 #TODO: make appropriate checks for compiler
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
-    SET(ADDITIONAL_COMP_FLAGS ${ADDITIONAL_COMP_FLAGS} "-std=c++11 -g -O1 -DFULLDEBUG")
+    SET(ADDITIONAL_COMP_FLAGS ${ADDITIONAL_COMP_FLAGS} "-g -O1 -DFULLDEBUG")
     MESSAGE("Building in DEBUG mode")
 ELSEIF(CMAKE_BUILD_TYPE MATCHES Release)
     SET(ADDITIONAL_COMP_FLAGS ${ADDITIONAL_COMP_FLAGS} "-std=c++11 -O3 -ftree-vectorize -march=native")

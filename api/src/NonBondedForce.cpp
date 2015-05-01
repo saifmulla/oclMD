@@ -79,8 +79,10 @@ OclMD::NonBondedForce::LJPairs::LJPairs(
                                         Real sigma, Real epsilon,
                                         Real rCut, Real rMin,
                                         Real dr, int pairA, int PairB)
-:sigma_(sigma),epsilon_(epsilon),rCut_(rCut),rMin_(rMin),dr_(dr),rCutSqr_(rCut_*rCut_),pairs_({pairA,PairB})
+:sigma_(sigma),epsilon_(epsilon),rCut_(rCut),rMin_(rMin),dr_(dr),rCutSqr_(rCut_*rCut_)
 {
+    pairs_.one = pairA;
+    pairs_.two = PairB;
 }
 
 OclMD::NonBondedForce::LJPairs::LJPairs(){

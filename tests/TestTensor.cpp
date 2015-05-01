@@ -42,7 +42,7 @@ TEST(TestTensor,assignment2){
 }
 
 TEST(TestTensor,vectors){
-    std::vector<Tensor<double>> t(10);
+    std::vector<Tensor<double> > t(10);
 }
 
 TEST(TestTensor,outerproduct){

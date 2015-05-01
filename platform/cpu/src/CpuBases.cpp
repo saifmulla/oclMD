@@ -21,9 +21,9 @@ static std::vector<OclMD::Vec3>& extractForces(OclMD::ContextImpl& context){
     return *((std::vector<OclMD::Vec3>*) data->forces_);
 }
 
-static std::vector<OclMD::Tensor<double>>& extractVirial(OclMD::ContextImpl& context){
+static std::vector<OclMD::Tensor<double> >& extractVirial(OclMD::ContextImpl& context){
     OclMD::CpuPlatform::PlatformData* data = reinterpret_cast<OclMD::CpuPlatform::PlatformData*>(context.getPlatformData());
-    return *((std::vector<OclMD::Tensor<double>>*) data->virial_);
+    return *((std::vector<OclMD::Tensor<double> >*) data->virial_);
 }
 
 static std::vector<double>& extractPE(OclMD::ContextImpl& context){
