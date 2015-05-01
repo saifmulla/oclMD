@@ -28,7 +28,7 @@ TEST(TestSystem, paramConstructor){
     System s(dimensions,1);
     //    ASSERT_EQ(10,s.getNumParticles());
     Vec3 dimensions2[3];
-    s.getDimensions(dimensions2[0],dimensions2[1],dimensions2[3]);
+    s.getDimensions(dimensions2[0],dimensions2[1],dimensions2[2]);
     ASSERT_EQ(dimensions[0][0],dimensions2[0][0]);
 }
 

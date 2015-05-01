@@ -6,7 +6,7 @@ SET(CMAKE_OSX_ARCHITECTURES "x86_64")
 SET(CMAKE_OSX_DEPLOYMENT_TARGET "")
 ENDIF(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
 
-PROJECT(OclMD) #name of project
+PROJECT(OclMD CXX) #name of project
 SET(OCLMD_LIBRARY_NAME OclMD) #project library name
 SET(SHARED_TARGET ${OCLMD_LIBRARY_NAME}) #shared
 SET(STATIC_TARGET ${OCLMD_LIBRARY_NAME}_static) #static
@@ -18,22 +18,57 @@ MESSAGE("Using CMAKE version ${cmv}, anything below 2.8 is not guarenteed to wor
 # create a list of of directories to be compiled at first
 SET(OCLMD_SRC_SUB_DIR base/src)
 
+#check if CMAKE_BUILD_TYPE is specified or else directly put to
+# debug version, however in production make this to Release as default
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE Debug)
+#later add further compiler definition information add_definitions
+ENDIF(NOT CMAKE_BUILD_TYPE)
+
+SET(ADDITIONAL_COMP_FLAGS "")
+
 #set c++11 flag if compiler supports
 #TODO: make appropriate checks for compiler
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+    SET(ADDITIONAL_COMP_FLAGS ${ADDITIONAL_COMP_FLAGS} "-std=c++11 -g -O1 -DFULLDEBUG")
+    MESSAGE("Building in DEBUG mode")
+ELSEIF(CMAKE_BUILD_TYPE MATCHES Release)
+    SET(ADDITIONAL_COMP_FLAGS ${ADDITIONAL_COMP_FLAGS} "-std=c++11 -O3 -ftree-vectorize -march=native")
+    MESSAGE("Building in RELEASE mode")
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
+
+# now append the conditional compiler flags to
+# CMAKE_CXX_FLAGS
+SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${ADDITIONAL_COMP_FLAGS})
+
 #set preprocessor definations for internal realType
 IF(${REALTYPE})
 ADD_DEFINITIONS(-DREALTYPE=${REALTYPE})
 ENDIF(${REALTYPE})
 
-IF(NOT CMAKE_BUILD_TYPE)
-SET(CMAKE_BUILD_TYPE Debug)
-#later add further compiler definition information add_definitions
-ENDIF(NOT CMAKE_BUILD_TYPE)
+#check if GTEST_DIR and GMOCK_DIR paths are specified
+# if not specified then compile the supplied frameworks
+# which comes along source distribution
+#
+#
+# later supply make provisions for enabling and disabling
+# testing this will decide upon framework compilation
+#
+#
+IF(NOT GTEST_DIR)
+    MESSAGE("Using source supplied GTest framework...")
+    SET(GTEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/gtest)
+    MESSAGE("GTEST directory root " ${GTEST_DIR})
+    ADD_SUBDIRECTORY(frameworks/gtest)
+ENDIF(NOT GTEST_DIR)
 
-IF(CMAKE_BUILD_TYPE MATCHES Debug)
-ADD_DEFINITIONS(-std=c++11 -g -O1 -DFULLDEBUG)
-MESSAGE("Building in debug mode")
-ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
+IF(NOT GMOCK_DIR)
+    MESSAGE("Using source supplied gmock framework...")
+    SET(GMOCK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/gmock)
+    MESSAGE("GMOCK directory root " ${GTEST_MOCK})
+    ADD_SUBDIRECTORY(frameworks/gmock)
+ENDIF(NOT GMOCK_DIR)
+
 
 # just added a variable with src directory name embedded
 SET(SRC_SUBDIRS "src")

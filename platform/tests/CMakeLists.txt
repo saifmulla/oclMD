@@ -2,7 +2,7 @@
 PROJECT(OclMDPlatformTests)
 
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SRC_DIR}/base/include" "${GTEST_DIR}/include")
-SET(SHARED_LINKS OclMD pthread "-L${GTEST_DIR}" gtest "-L${GMOCK_DIR}" gmock)
+SET(SHARED_LINKS OclMD pthread "-L${GTEST_DIR}" gtest)
 
 ENABLE_TESTING() #testing enabled in this directory
 
