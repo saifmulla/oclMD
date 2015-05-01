@@ -9,6 +9,7 @@
 #ifndef OclMD_NonBondedForceImpl_h
 #define OclMD_NonBondedForceImpl_h
 
+#include <cstdlib>
 #include <vector>
 #include "oclmd/RealType.h"
 #include "oclmd/Base.h"
