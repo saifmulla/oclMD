@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "mocks/Mock_Platform.h"
+//#include "mocks/Mock_Platform.h"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "oclmd/Vec3.h"
@@ -25,8 +25,8 @@ TEST(TestContextImpl, construct){
     nbf.addLJPair(0.12,0.0034,0.0,0.0,0.1,1,1);
     s.addParticle(2.0);
     s.addForce(&nbf);
-    MockPlatform* cpu;// = new CpuPlatform();
-    OclMD::ContextImpl context(s,cpu);
+//    MockPlatform* cpu = new CpuPlatform();
+//    OclMD::ContextImpl context(s,cpu);
     SUCCEED();
 }
 

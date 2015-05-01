@@ -17,11 +17,11 @@ void OclMD::Platform::registerPlatform(Platform* platform){
 Platform& OclMD::Platform::getPlatform(){
     return *platformType;
 }
-
-void Platform::createData(ContextImpl& context) const {
-
-}
-
-void Platform::deleteData(ContextImpl& context) const {
-
-}
+//
+//void Platform::createData(ContextImpl& context) const {
+//
+//}
+//
+//void Platform::deleteData(ContextImpl& context) const {
+//
+//}
