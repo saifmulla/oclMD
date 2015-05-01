@@ -29,8 +29,6 @@ OclMD::System::~System(){
     //    for (int i=0; i<forces_.size(); i++)
     //        delete forces_[i];
 
-    //delete moleculeMasses
-    free(moleculeMasses_);
 }
 
 void OclMD::System::setDimensions(const Vec3& x,
