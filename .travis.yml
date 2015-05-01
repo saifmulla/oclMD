@@ -4,4 +4,4 @@ compiler:
   - clang++
 
 script:
-  - cmake
+  - cmake .
