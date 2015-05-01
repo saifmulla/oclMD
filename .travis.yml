@@ -4,4 +4,8 @@ compiler:
   - clang++
 
 script:
-  - cmake .
+  - mkdir _builds
+  - cd _builds
+  - cmake ../
+  - make
+  - ctest
