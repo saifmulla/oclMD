@@ -17,14 +17,13 @@ class ContextImpl;
 
 class ForceImpl {
 public:
-    virtual ~ForceImpl(){
-}
+    virtual ~ForceImpl(){}
 
-virtual void initialise(ContextImpl& impl) = 0;
+    virtual void initialise(ContextImpl& impl) = 0;
 
-virtual Real calculateForces(ContextImpl& impl) = 0;
+    virtual Real calculateForces(ContextImpl& impl) = 0;
 
-virtual Force& getOwner() = 0;
+    virtual Force& getOwner() = 0;
 };
 
 }// end namespace

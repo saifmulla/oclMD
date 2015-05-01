@@ -29,6 +29,7 @@ public:
 
 protected:
     friend class ContextImpl;
+    
     virtual ForceImpl* createImpl() = 0;
 
 };
