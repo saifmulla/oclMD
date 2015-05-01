@@ -1,11 +1,12 @@
 *~
-build
+*build
 Makefile
 *.dylib
 *.a
 *.so
 xcode
 gtest
+gmock
 *.kdev*
 CMakeCache.txt
 CMakeFiles
