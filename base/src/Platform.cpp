@@ -1,4 +1,6 @@
 #include "oclmd/Platform.h"
+#include "oclmd/Base.h"
+#include "oclmd/BaseFactory.h"
 
 
 using namespace OclMD;
@@ -20,7 +22,12 @@ Platform& OclMD::Platform::getPlatform(){
     return *platformType;
 }
 
-void Platform::registerKernelFactory(const std::string& name,
+void Platform::registerBaseFactory(const std::string& name,
                                      BaseFactory* factory){
     baseFactories[name] = factory;
+}
+
+Base Platform::createBase(const std::string& name,
+                               ContextImpl& impl) const {
+    return Base(baseFactories.find(name)->second->createBaseImpl(name,*this,impl));
 }

@@ -43,7 +43,7 @@ public:
     
     void CalculateForcesandEnergy();
     /// set data functions
-    void setPositions(std::vector<Vec3>& positions);
+    void setPositions(const std::vector<Vec3>& positions);
     
     void getForces(std::vector<Vec3>& forces);
     

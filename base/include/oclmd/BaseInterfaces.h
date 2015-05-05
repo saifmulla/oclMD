@@ -118,7 +118,7 @@ public:
     
     virtual void initialise(const System& system) = 0;
     
-    virtual void setPositions(ContextImpl& context, std::vector<Vec3>& positions) = 0;
+    virtual void setPositions(ContextImpl& context, const std::vector<Vec3>& positions) = 0;
     
     virtual void getForces(ContextImpl& context, std::vector<Vec3>& forces) = 0;
     

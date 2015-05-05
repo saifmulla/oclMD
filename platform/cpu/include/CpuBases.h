@@ -45,9 +45,9 @@ public:
     
     void getForces(ContextImpl& context, std::vector<Vec3>& forces);
     
-    void setPeriodicBox(ContextImpl& context, const Vec3& x, const Vec3& y, const Vec3& z);
+    void setPeriodicBox(ContextImpl& context, const Vec3& x, const Vec3& y, const Vec3& z) const;
     
-    void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z);
+    void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z) const;
     
 private:
 //    CpuPlatform::PlaformData pData_;

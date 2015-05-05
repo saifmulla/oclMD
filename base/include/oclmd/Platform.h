@@ -32,7 +32,9 @@ public:
     */
     static void registerPlatform(Platform* platform);
     
-    void registerKernelFactory(const std::string& name, BaseFactory* factory);
+    void registerBaseFactory(const std::string& name, BaseFactory* factory);
+    
+    Base createBase(const std::string& name, ContextImpl& context) const;
 private:
     static Platform* platformType;
     std::map<std::string, BaseFactory*> baseFactories;

@@ -32,9 +32,21 @@ OclMD::ContextImpl::ContextImpl(System& system, Platform* platform):system_(syst
         forceImpls_[fi]->initialise(*this);
     }
     
+    /// initialise baseData implementations
+    internalDataBase = platform_->createBase(OclMD::BaseData::className(),*this);
+    internalDataBase.getAs<OclMD::BaseData>().initialise(system_);
+    
+    /// initialise internal force class
+    forceKernel = platform_->createBase(OclMD::BaseCalculateForcesAndEnergy::className(),
+                                        *this);
+    forceKernel.getAs<OclMD::BaseCalculateForcesAndEnergy>().initialise(system_);
     /// set periodic box for internal
     OclMD::Vec3 tempPeriodicBox[3];
     system.getDimensions(tempPeriodicBox[0],tempPeriodicBox[1],tempPeriodicBox[2]);
+    internalDataBase.getAs<OclMD::BaseData>().setPeriodicBox(*this,
+                                                             tempPeriodicBox[0],
+                                                             tempPeriodicBox[1],
+                                                             tempPeriodicBox[2]);
     /// once everything initialised
 }
 
@@ -52,16 +64,21 @@ void OclMD::ContextImpl::setPlatformData(void* data){
     platformData_ = data;
 }
 
-void OclMD::ContextImpl::setPositions(std::vector<Vec3>& positions){
-    
+void OclMD::ContextImpl::setPositions(const std::vector<Vec3>& positions){
+    internalDataBase.getAs<OclMD::BaseData>().setPositions(*this,positions);
 }
 
 void OclMD::ContextImpl::getForces(std::vector<Vec3>& forces){
-    
+    internalDataBase.getAs<OclMD::BaseData>().getForces(*this,forces);
 }
 
 void OclMD::ContextImpl::CalculateForcesandEnergy(){
+    forceKernel.getAs<OclMD::BaseCalculateForcesAndEnergy>().prepare(*this);
+    for(int f = 0; f < system_.getNumForces(); f++){
+        forceImpls_[f]->calculateForces(*this);
+    }
     
+    forceKernel.getAs<OclMD::BaseCalculateForcesAndEnergy>().calculate(*this);
 }
 
 OclMD::System& OclMD::ContextImpl::getSystem(){

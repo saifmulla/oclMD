@@ -8,12 +8,16 @@
 //
 
 #include "CpuPlatform.h"
-//#include "CpuBaseFactory.h"
+#include "CpuBaseFactory.h"
+#include "CpuBases.h"
 
 using namespace std;
 
 OclMD::CpuPlatform::CpuPlatform(){
-//    OclMD::CpuBaseFactory* factory = new OclMD::CpuBaseFactory();
+    OclMD::CpuBaseFactory* factory = new OclMD::CpuBaseFactory();
+    registerBaseFactory(BaseCalculateForcesAndEnergy::className(),factory);
+    registerBaseFactory(BaseData::className(),factory);
+    registerBaseFactory(BaseCalculateNonBondedForce::className(),factory);
 }
 
 bool OclMD::CpuPlatform::supportsDoublePrecision() const {
@@ -34,9 +38,9 @@ void OclMD::CpuPlatform::deleteData(ContextImpl& context) const {
 
 OclMD::CpuPlatform::PlatformData::PlatformData(int numParticles)
 :numParticles_(numParticles),stepCount_(0),time_(0.0){
-    positions_ = new std::vector<Vec3>(numParticles_);
-    forces_ = new std::vector<Vec3>(numParticles_);
-    virial_ = new std::vector<Tensor<double> >(numParticles_);
+    positions_ = new std::vector<OclMD::Vec3>(numParticles_);
+    forces_ = new std::vector<OclMD::Vec3>(numParticles_);
+    virial_ = new std::vector<OclMD::Tensor<double> >(numParticles_);
     pE_ = new std::vector<Real>(numParticles_);
     periodicBoxSize_ = new OclMD::Vec3();
 }
@@ -46,9 +50,9 @@ OclMD::CpuPlatform::PlatformData::~PlatformData(){
     std::cout<< "PlatformData deleted" << std::endl;
 #endif
     
-    delete (vector<Vec3>*) positions_;
-    delete (vector<Vec3>*) forces_;
-    delete (Vec3*) periodicBoxSize_;
-    delete (vector<Tensor<double> >*) virial_;
-    delete (vector<Real>*) pE_;
+    delete (std::vector<OclMD::Vec3>*) positions_;
+    delete (std::vector<OclMD::Vec3>*) forces_;
+    delete (OclMD::Vec3*) periodicBoxSize_;
+    delete (std::vector<OclMD::Tensor<double> >*) virial_;
+    delete (std::vector<Real>*) pE_;
 }

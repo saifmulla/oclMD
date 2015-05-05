@@ -31,16 +31,27 @@ static std::vector<double>& extractPE(OclMD::ContextImpl& context){
     return *((std::vector<double>*) data->pE_);
 }
 
+static OclMD::Vec3& extractBoxDimensions(OclMD::ContextImpl& context){
+    OclMD::CpuPlatform::PlatformData* data = reinterpret_cast<OclMD::CpuPlatform::PlatformData*>(context.getPlatformData());
+    return *(OclMD::Vec3*) data->periodicBoxSize_;
+}
 
 void OclMD::CpuBaseCalculateForcesAndEnergy::initialise(const System& system){
-    
+#ifdef FULLDEBUG
+    std::cout << "Initialising CpuBaseCalculateForcesAndEnergy" << std::endl;
+#endif
 }
 
 void OclMD::CpuBaseCalculateForcesAndEnergy::prepare(ContextImpl& context){
-    
+#ifdef FULLDEBUG
+    std::cout << "prepare on CpuBaseCalculateForcesAndEnergy" << std::endl;
+#endif
 }
 
 Real OclMD::CpuBaseCalculateForcesAndEnergy::calculate(ContextImpl& context){
+#ifdef FULLDEBUG
+    std::cout << "calculating CpuBaseCalculateForcesAndEnergy" << std::endl;
+#endif
     
 }
 
@@ -52,6 +63,10 @@ void OclMD::CpuBaseData::initialise(const System& system){
 
 void OclMD::CpuBaseData::setPositions(ContextImpl& context,
                                       const std::vector<Vec3>& positions){
+#ifdef FULLDEBUG
+    std::cout << "setting positions on CpuBaseData" << std::endl;
+#endif
+
     int numparticles = context.getSystem().getNumParticles();
     std::vector<OclMD::Vec3>& dataPositions = extractPositions(context);
     for(int i = 0; i < numparticles; i++){
@@ -71,12 +86,15 @@ void OclMD::CpuBaseData::getForces(ContextImpl& context,
 }
 
 void OclMD::CpuBaseData::setPeriodicBox(ContextImpl& context,
-                                        const Vec3& x, const Vec3& y, const Vec3& z){
-    
+                                        const Vec3& x, const Vec3& y, const Vec3& z) const {
+    OclMD::Vec3& boxdim = extractBoxDimensions(context);
+    boxdim[0] = x[0]; //x axis;
+    boxdim[1] = y[1]; //y axis;
+    boxdim[2] = z[2]; //z axis;
 }
 
 void OclMD::CpuBaseData::getPeriodicBox(ContextImpl& context,
-                                        Vec3& x, Vec3& y, Vec3& z){
+                                        Vec3& x, Vec3& y, Vec3& z) const {
     
 };
 
@@ -85,16 +103,24 @@ void OclMD::CpuBaseData::getPeriodicBox(ContextImpl& context,
 void OclMD::CpuBaseCalculateNonBondedForce::initialise(const System& system,
                                                        const NonBondedForceImpl& force)
 {
-    nonbondedixn = new CpuNonBondedIxn((const OclMD::NonBondedForceImpl::LJInfo**) force.getLJInfo());
+#ifdef FULLDEBUG
+    std::cout << "Initialising on CpuBaseCalculateNonBondedForce" << std::endl;
+#endif
+    nonbondedixn = new OclMD::CpuNonBondedIxn((const OclMD::NonBondedForceImpl::LJInfo**) force.getLJInfo());
 }
 
 Real OclMD::CpuBaseCalculateNonBondedForce::calculate(ContextImpl& context)
 {
+#ifdef FULLDEBUG
+    std::cout << "calculate on CpuBaseCalculateNonBondedForce" << std::endl;
+#endif
+
     nonbondedixn->calculateForces(context.getSystem().getNumParticles(),
                                  extractPositions(context),
                                  extractForces(context),
                                  extractPE(context),
                                  extractVirial(context));
+    
                                  
 }
 

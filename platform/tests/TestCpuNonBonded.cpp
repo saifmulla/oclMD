@@ -33,6 +33,7 @@ TEST(TestNonBondedIxn,oneatomljpair){
     positions[0] = Vec3(0,0,0);
     positions[1] = Vec3(2,0,0);
     context.setPositions(positions);
+    context.CalculateForcesandEnergy();
     
 }
 
