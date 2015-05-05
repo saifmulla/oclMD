@@ -3,10 +3,13 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace OclMD {
 
 class ContextImpl;
+class Base;
+class BaseFactory;
 
 class Platform {
 
@@ -28,8 +31,12 @@ public:
     * is CpuPlatform by default
     */
     static void registerPlatform(Platform* platform);
+    
+    void registerKernelFactory(const std::string& name, BaseFactory* factory);
 private:
     static Platform* platformType;
+    std::map<std::string, BaseFactory*> baseFactories;
+    
 };
 
 }//end namespace

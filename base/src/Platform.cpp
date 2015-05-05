@@ -1,4 +1,6 @@
 #include "oclmd/Platform.h"
+
+
 using namespace OclMD;
 
 /// globally initialise static variable platformType
@@ -17,11 +19,8 @@ void OclMD::Platform::registerPlatform(Platform* platform){
 Platform& OclMD::Platform::getPlatform(){
     return *platformType;
 }
-//
-//void Platform::createData(ContextImpl& context) const {
-//
-//}
-//
-//void Platform::deleteData(ContextImpl& context) const {
-//
-//}
+
+void Platform::registerKernelFactory(const std::string& name,
+                                     BaseFactory* factory){
+    baseFactories[name] = factory;
+}

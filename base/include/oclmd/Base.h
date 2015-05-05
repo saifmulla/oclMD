@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "BaseImpl.h"
+#include "oclmd/BaseImpl.h"
 
 namespace OclMD {
 
@@ -27,6 +27,18 @@ public:
 
     /// get BaseImpl object reference
     const BaseImpl& getImpl() const;
+    
+    BaseImpl& getImpl();
+    
+    template <class B>
+    const B& getAs() const {
+        return dynamic_cast<B&>(*impl);
+    }
+
+    template <class B>
+    B& getAs(){
+        return dynamic_cast<B&>(*impl);
+    }
 
 private:
     BaseImpl* impl;

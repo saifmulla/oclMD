@@ -8,11 +8,12 @@
 //
 
 #include "CpuPlatform.h"
+//#include "CpuBaseFactory.h"
 
 using namespace std;
 
 OclMD::CpuPlatform::CpuPlatform(){
-    
+//    OclMD::CpuBaseFactory* factory = new OclMD::CpuBaseFactory();
 }
 
 bool OclMD::CpuPlatform::supportsDoublePrecision() const {
