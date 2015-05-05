@@ -29,6 +29,7 @@
 #include "oclmd/Tensor.h"
 #include "oclmd/System.h"
 #include "oclmd/impl/ContextImpl.h"
+#include "CpuBaseFactory.h"
 
 namespace OclMD {
 
@@ -60,6 +61,11 @@ public:
     
     /// delete the internal datastructure for platformdata
     void deleteData(ContextImpl& context) const;
+    
+    BaseFactory* getBaseFactory() const;
+    
+private:
+    CpuBaseFactory* factory;
 };
 
 /**

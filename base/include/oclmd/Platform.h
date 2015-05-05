@@ -23,6 +23,8 @@ public:
     virtual void createData(ContextImpl& context) const = 0;
 
     virtual void deleteData(ContextImpl& context) const = 0;
+    
+    virtual BaseFactory* getBaseFactory() const = 0;
 
     Platform& getPlatform();
 
@@ -32,12 +34,13 @@ public:
     */
     static void registerPlatform(Platform* platform);
     
-    void registerBaseFactory(const std::string& name, BaseFactory* factory);
+//    void registerBaseFactory(const std::string& name, BaseFactory* factory);
     
     Base createBase(const std::string& name, ContextImpl& context) const;
+    
 private:
     static Platform* platformType;
-    std::map<std::string, BaseFactory*> baseFactories;
+//    std::map<std::string, BaseFactory*> baseFactories;
     
 };
 

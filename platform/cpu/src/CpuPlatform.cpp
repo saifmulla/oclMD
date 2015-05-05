@@ -8,18 +8,19 @@
 //
 
 #include "CpuPlatform.h"
-#include "CpuBaseFactory.h"
 #include "CpuBases.h"
 
 using namespace std;
 
-OclMD::CpuPlatform::CpuPlatform(){
-    OclMD::CpuBaseFactory* factory = new OclMD::CpuBaseFactory();
-    registerBaseFactory(BaseCalculateForcesAndEnergy::className(),factory);
-    registerBaseFactory(BaseData::className(),factory);
-    registerBaseFactory(BaseCalculateNonBondedForce::className(),factory);
+OclMD::CpuPlatform::CpuPlatform():factory(new OclMD::CpuBaseFactory()){
+//    registerBaseFactory(BaseCalculateForcesAndEnergy::className(),factory);
+//    registerBaseFactory(BaseData::className(),factory);
+//    registerBaseFactory(BaseCalculateNonBondedForce::className(),factory);
 }
 
+OclMD::BaseFactory* OclMD::CpuPlatform::getBaseFactory() const {
+    return factory;
+}
 bool OclMD::CpuPlatform::supportsDoublePrecision() const {
     return true;
 }

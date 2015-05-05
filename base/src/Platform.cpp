@@ -22,12 +22,13 @@ Platform& OclMD::Platform::getPlatform(){
     return *platformType;
 }
 
-void Platform::registerBaseFactory(const std::string& name,
-                                     BaseFactory* factory){
-    baseFactories[name] = factory;
-}
+//void Platform::registerBaseFactory(const std::string& name,
+//                                     BaseFactory* factory){
+//    baseFactories[name] = factory;
+//}
 
 Base Platform::createBase(const std::string& name,
                                ContextImpl& impl) const {
-    return Base(baseFactories.find(name)->second->createBaseImpl(name,*this,impl));
+//    return Base(baseFactories.find(name)->second->createBaseImpl(name,*this,impl));
+    return Base(this->getBaseFactory()->createBaseImpl(name,*this,impl));
 }
