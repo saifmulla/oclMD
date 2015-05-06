@@ -61,12 +61,12 @@ TEST(TestNonBondedIxn,oneatomljpair){
     Vec3 expectForce = (diff/MagSqr) * 1.0;
     
     /// test force equation with resultant forces
-    EXPECT_EQ(-expectForce[0],forces[0][0]);
-    EXPECT_EQ(expectForce[1],forces[0][1]);
-    EXPECT_EQ(expectForce[2],forces[0][2]);
-    EXPECT_EQ(expectForce[0],forces[1][0]);
-    EXPECT_EQ(expectForce[1],forces[1][1]);
-    EXPECT_EQ(expectForce[2],forces[1][2]);
+    EXPECT_DOUBLE_EQ(-expectForce[0],forces[0][0]);
+    EXPECT_DOUBLE_EQ(expectForce[1],forces[0][1]);
+    EXPECT_DOUBLE_EQ(expectForce[2],forces[0][2]);
+    EXPECT_DOUBLE_EQ(expectForce[0],forces[1][0]);
+    EXPECT_DOUBLE_EQ(expectForce[1],forces[1][1]);
+    EXPECT_DOUBLE_EQ(expectForce[2],forces[1][2]);
     
     ///calculate energy equation to test calculated values
     Real mag = SQRT(MagSqr);
@@ -74,8 +74,8 @@ TEST(TestNonBondedIxn,oneatomljpair){
     e1 -= (POW(1.2,6) / POW(mag,6));
     Real expectpe = 1.0 * e1 * 0.5;
     /// compare result
-    EXPECT_EQ(expectpe,pe[0]);
-    EXPECT_EQ(expectpe,pe[1]);
+    EXPECT_DOUBLE_EQ(expectpe,pe[0]);
+    EXPECT_DOUBLE_EQ(expectpe,pe[1]);
     
     std::cout << "V0 => " << virial[0] << std::endl;
     std::cout << "V1 => " << virial[1] << std::endl;
