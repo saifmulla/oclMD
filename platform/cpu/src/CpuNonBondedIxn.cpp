@@ -63,9 +63,9 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
             {
                 Real rsIsJMag = Mag(rsIsJMagSq);
                 
-                Real force = forceLJPairs(rsIsJMagSq,lj.sigma,lj.epsilon);
+                Real force = forceLJPairs(rsIsJMag,lj.sigma,lj.epsilon);
                 
-                vector forceContribution = (rsIsJ/rsIsJMagSq) * fraction;
+                vector forceContribution = (rsIsJ/rsIsJMag) * fraction;
                 
                 //add calculated force to each atomic force
                 forces[i] += forceContribution;
@@ -112,13 +112,10 @@ Real OclMD::CpuNonBondedIxn::forceLJPairs(const Real rij,
 Real OclMD::CpuNonBondedIxn::energyLJPairs(const Real rij,
                                            const Real sigma,
                                            const Real epsilon){
-    Real ps6 = POW(sigma,6);
-    Real ps12 = POW(sigma,12);
-    Real rij12 = POW(rij,12);
-    Real rij6 = POW(rij,6);
-    
-    Real result = ps12 / rij12;
-    result -= (ps6/rij6);
+    Real div = sigma / rij;
+    Real result = POW(div,12);
+    result -= POW(div,6);
+    result *= 4.0 * epsilon;
     return result;
 }
 

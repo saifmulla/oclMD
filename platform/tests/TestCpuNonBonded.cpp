@@ -53,12 +53,13 @@ TEST(TestNonBondedIxn,oneatomljpair){
     MagSqr += diff[1] * diff[1];
     MagSqr += diff[2] * diff[2];
     
+    Real mag = SQRT(MagSqr);
     Real num1 = -48 * 1.0 * POW(1.2,12);
-    num1 /= MagSqr;
+    num1 /= POW(mag,13);
     Real num2 = 24 * 1.0 * POW(1.2,6);
-    num2 /= MagSqr;
+    num2 /= POW(mag,7);
     Real force = num1 + num2;
-    Vec3 expectForce = (diff/MagSqr) * 1.0;
+    Vec3 expectForce = (diff/mag) * 1.0;
     
     /// test force equation with resultant forces
     EXPECT_DOUBLE_EQ(-expectForce[0],forces[0][0]);
@@ -69,10 +70,10 @@ TEST(TestNonBondedIxn,oneatomljpair){
     EXPECT_DOUBLE_EQ(expectForce[2],forces[1][2]);
     
     ///calculate energy equation to test calculated values
-    Real mag = SQRT(MagSqr);
+    
     Real e1 = POW(1.2,12)/POW(mag,12);
     e1 -= (POW(1.2,6) / POW(mag,6));
-    Real expectpe = 1.0 * e1 * 0.5;
+    Real expectpe = e1 * (4.0 * 1.0 * 0.5);
     /// compare result
     EXPECT_DOUBLE_EQ(expectpe,pe[0]);
     EXPECT_DOUBLE_EQ(expectpe,pe[1]);
