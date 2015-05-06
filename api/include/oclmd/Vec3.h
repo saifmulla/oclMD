@@ -1,4 +1,5 @@
 #include<cassert>
+#include <iostream>
 #include "RealType.h"
 #include "OclMDException.h"
 
@@ -96,11 +97,18 @@ public:
         return Vec3(lhs[0]*scalar, lhs[1]*scalar, lhs[2]*scalar);
     }
     
+    std::ostream& write(std::ostream& os) const {
+        return os << "[ " << data_[0] << ", " << data_[1] << ", " << data_[2] << " ]";
+    }
     
     ~Vec3(){}
     
 };//end class
 
+inline std::ostream& operator<<(std::ostream& os, const Vec3& vec) {
+    return vec.write(os);
+}
+    
 inline Real MagSqr(Vec3& data){
     Real sum = 0.0;
     sum += data[0] * data[0];

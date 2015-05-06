@@ -15,6 +15,7 @@
  */
 
 #include <cassert>
+#include <iostream>
 #include "oclmd/RealType.h"
 #include "oclmd/Vec3.h"
 #include "oclmd/OclMDException.h"
@@ -113,8 +114,19 @@ public:
                             v1[2]*v2[0],v1[2]*v2[1],v1[2]*v2[2]
                             );
     }
-};
     
+    std::ostream& write(std::ostream& os) const {
+        os << "[ " << data_[0] << ", " << data_[1] << ", " << data_[2] << " ]";
+        os << "[ " << data_[3] << ", " << data_[4] << ", " << data_[5] << " ]";
+        os << "[ " << data_[6] << ", " << data_[7] << ", " << data_[8] << " ]";
+        return os;
+    }
+};
+
+template <class T>
+inline std::ostream& operator<<(std::ostream& os, const Tensor<T>& vec) {
+    return vec.write(os);
+}
 // outer-product between two vectors
 template <class T>
 Tensor<T> outerProduct(const Vec3& v1,const Vec3& v2){

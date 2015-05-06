@@ -72,6 +72,18 @@ void OclMD::ContextImpl::getForces(std::vector<Vec3>& forces){
     internalDataBase.getAs<OclMD::BaseData>().getForces(*this,forces);
 }
 
+void OclMD::ContextImpl::getVirial(std::vector<OclMD::Tensor<double> >& virial){
+    internalDataBase.getAs<OclMD::BaseData>().getVirial(*this,virial);
+}
+
+void OclMD::ContextImpl::getPotentialEnergy(std::vector<Real>& pe){
+    internalDataBase.getAs<OclMD::BaseData>().getPotentialEnergy(*this,pe);
+}
+
+Real OclMD::ContextImpl::getTotalEnergy() {
+    
+}
+
 void OclMD::ContextImpl::CalculateForcesandEnergy(){
     forceKernel.getAs<OclMD::BaseCalculateForcesAndEnergy>().prepare(*this);
     for(int f = 0; f < system_.getNumForces(); f++){

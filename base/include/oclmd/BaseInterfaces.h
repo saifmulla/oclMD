@@ -23,6 +23,7 @@
 #include "oclmd/BaseImpl.h"
 #include "oclmd/RealType.h"
 #include "oclmd/Vec3.h"
+#include "oclmd/Tensor.h"
 #include "oclmd/System.h"
 #include "oclmd/impl/ContextImpl.h"
 #include "oclmd/impl/NonBondedForceImpl.h"
@@ -121,6 +122,10 @@ public:
     virtual void setPositions(ContextImpl& context, const std::vector<Vec3>& positions) = 0;
     
     virtual void getForces(ContextImpl& context, std::vector<Vec3>& forces) = 0;
+    
+    virtual void getVirial(ContextImpl& context, std::vector<Tensor<double> >& virial) = 0;
+    
+    virtual void getPotentialEnergy(ContextImpl& context, std::vector<double>& pe) = 0;
     
     virtual void setPeriodicBox(ContextImpl& context, const Vec3& x, const Vec3& y, const Vec3& z) const = 0;
     

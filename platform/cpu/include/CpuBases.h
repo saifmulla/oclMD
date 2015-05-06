@@ -3,6 +3,7 @@
 
 #include "oclmd/RealType.h"
 #include "oclmd/Vec3.h"
+#include "oclmd/Tensor.h"
 #include "oclmd/BaseInterfaces.h"
 #include "oclmd/System.h"
 #include "oclmd/impl/ContextImpl.h"
@@ -44,6 +45,10 @@ public:
     void setPositions(ContextImpl& context, const std::vector<Vec3>& positions);
     
     void getForces(ContextImpl& context, std::vector<Vec3>& forces);
+    
+    void getVirial(ContextImpl& context, std::vector<Tensor<double> >& virial);
+    
+    void getPotentialEnergy(ContextImpl& context, std::vector<double>& pe);
     
     void setPeriodicBox(ContextImpl& context, const Vec3& x, const Vec3& y, const Vec3& z) const;
     

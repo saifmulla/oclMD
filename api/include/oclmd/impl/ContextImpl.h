@@ -26,6 +26,7 @@
 #include "oclmd/Platform.h"
 //#include "CpuPlatform.h"
 #include "oclmd/Vec3.h"
+#include "oclmd/Tensor.h"
 
 namespace OclMD {
     
@@ -46,6 +47,16 @@ public:
     void setPositions(const std::vector<Vec3>& positions);
     
     void getForces(std::vector<Vec3>& forces);
+    
+    void getPotentialEnergy(std::vector<Real>& pe);
+    
+    void getVirial(std::vector<Tensor<double> >& virial);
+    
+    Real getTotalEnergy();
+    
+    Platform& getPlatform() {
+        return *platform_;
+    }
     
     System& getSystem();
     

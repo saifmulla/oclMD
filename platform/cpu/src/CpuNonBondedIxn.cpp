@@ -24,6 +24,9 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
                                              )
 {
 
+#ifdef FULLDEBUG
+    std::cout << "Calcualting forces inside CPUNONBONDEDIXN" << std::endl;
+#endif
     for (int i=0; i<numberParticles; i++)
     {
         vector atomI = positions[i];/// get one atom for atom I
@@ -36,7 +39,7 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
             vector rsIsJ = atomI - atomJ;
             //get magnitude square for distance delta
             Real rsIsJMagSq = MagSqr(rsIsJ);
-            
+
             /**
              * determine rcutSqr between two interacting atoms
              * essentially this is based on the Lennard Jones potential
@@ -52,7 +55,11 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
              * rCutSqr defined for the LJ pair if it is within
              * then perform pair-wise force calculation
              */
-            if(rsIsJMagSq < lj.rCutSqr)
+#ifdef FULLDEBUG
+            printf("MagSqr in NBIXN %3.8f and rcutsqr %3.8f\n",rsIsJMagSq,lj.rCutSqr);
+#endif
+
+            if(rsIsJMagSq <= lj.rCutSqr)
             {
                 Real rsIsJMag = Mag(rsIsJMagSq);
                 

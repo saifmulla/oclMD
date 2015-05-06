@@ -6,6 +6,8 @@
 //
 //
 #include "oclmd/impl/NonBondedForceImpl.h"
+#include "oclmd/impl/ContextImpl.h"
+#include "oclmd/BaseInterfaces.h"
 
 
 OclMD::NonBondedForceImpl::NonBondedForceImpl(OclMD::NonBondedForce& owner)
@@ -21,12 +23,16 @@ OclMD::NonBondedForceImpl::LJInfo** OclMD::NonBondedForceImpl::getLJInfo() const
     return ljPairs_;
 }
 
-void OclMD::NonBondedForceImpl::initialise(ContextImpl& impl)
+void OclMD::NonBondedForceImpl::initialise(ContextImpl& context)
 {
 
 #ifdef FULLDEBUG
     std::cout << "Initialising NonBondedForceImpl " << std::endl;
 #endif
+    /// create object of internal Base class of this class for appropriate platform.
+    baseKernel_ = context.getPlatform().createBase(
+                                                   OclMD::BaseCalculateNonBondedForce::className(),
+                                                   context);
     /**
      * reinitialise all the setting specified inside the nonBondedForce 
      * class by using the object copied in the owner object.
@@ -63,8 +69,12 @@ void OclMD::NonBondedForceImpl::initialise(ContextImpl& impl)
                                  templj.dr_,templj.rCut_,templj.rCutSqr_);
     }
     
+    /// initialise internal class
+    baseKernel_.getAs<OclMD::BaseCalculateNonBondedForce>().initialise(
+                                                            context.getSystem(),
+                                                            *this);
 }
 
-Real OclMD::NonBondedForceImpl::calculateForces(ContextImpl& impl){
-    
+Real OclMD::NonBondedForceImpl::calculateForces(ContextImpl& context){
+    baseKernel_.getAs<OclMD::BaseCalculateNonBondedForce>().calculate(context);
 }

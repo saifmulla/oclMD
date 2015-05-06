@@ -80,10 +80,27 @@ void OclMD::CpuBaseData::getForces(ContextImpl& context,
     int numparticles = context.getSystem().getNumParticles();
     std::vector<OclMD::Vec3>& dataForces = extractForces(context);
     for (int i = 0; i < numparticles; i++) {
-        dataForces[i] = forces[i];
+        forces[i] = dataForces[i];
     }
     
 }
+
+void OclMD::CpuBaseData::getVirial(OclMD::ContextImpl& context, std::vector<OclMD::Tensor<double> >& virial){
+    int numparticles = context.getSystem().getNumParticles();
+    std::vector<OclMD::Tensor<double> >& dataVirial = extractVirial(context);
+    for (int i = 0; i < numparticles; i++) {
+        virial[i] = dataVirial[i];
+    }
+}
+
+void OclMD::CpuBaseData::getPotentialEnergy(OclMD::ContextImpl& context, std::vector<double>& pe){
+    int numparticles = context.getSystem().getNumParticles();
+    std::vector<double>& dataPE = extractPE(context);
+    for (int i = 0; i < numparticles; i++) {
+        pe[i] = dataPE[i];
+    }
+}
+
 
 void OclMD::CpuBaseData::setPeriodicBox(ContextImpl& context,
                                         const Vec3& x, const Vec3& y, const Vec3& z) const {

@@ -41,14 +41,14 @@ public:
 
     NonBondedForceImpl(NonBondedForce& force);
     ~NonBondedForceImpl();
-    void initialise(ContextImpl& impl);
+    void initialise(ContextImpl& context);
 
     /**
      * calculate pair-wise forces and also 
      * return total energy calculated between
      * the system.
      */
-    Real calculateForces(ContextImpl& impl);
+    Real calculateForces(ContextImpl& context);
     
     Force& getOwner(){
         return owner_;
