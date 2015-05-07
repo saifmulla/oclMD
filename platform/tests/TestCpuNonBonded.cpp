@@ -59,7 +59,8 @@ TEST(TestNonBondedIxn,oneatomljpair){
     Real num2 = 24 * 1.0 * POW(1.2,6);
     num2 /= POW(mag,7);
     Real force = num1 + num2;
-    Vec3 expectForce = (diff/mag) * 1.0;
+    force *= mag;
+    Vec3 expectForce = diff/force;
     
     /// test force equation with resultant forces
     EXPECT_DOUBLE_EQ(-expectForce[0],forces[0][0]);

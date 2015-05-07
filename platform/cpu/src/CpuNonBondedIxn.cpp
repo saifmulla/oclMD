@@ -65,7 +65,9 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
                 
                 Real force = forceLJPairs(rsIsJMag,lj.sigma,lj.epsilon);
                 
-                vector forceContribution = (rsIsJ/rsIsJMag) * fraction;
+                force *= 1.0 * rsIsJMag;
+                
+                vector forceContribution = rsIsJ/force;
                 
                 //add calculated force to each atomic force
                 forces[i] += forceContribution;
