@@ -1,6 +1,7 @@
 language: cpp
 compiler: 
   - g++
+  - clang++
 
 script:
   - mkdir _builds
