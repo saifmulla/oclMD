@@ -20,6 +20,10 @@ TEST(TestNBF,initialise){
 //    nbf.getCutOffDistance();
     ASSERT_EQ(2.0,nbf.getCutOffDistance());
     NonBondedForce::NonBondedMethods method = nbf.getNonBondedMethod();
+    if(method)
+        SUCCEED();
+    else
+        FAIL();
 }
 
 

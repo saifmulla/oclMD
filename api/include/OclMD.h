@@ -6,6 +6,7 @@
 #include "oclmd/Vec3.h"
 #include "oclmd/Tensor.h"
 #include "oclmd/Force.h"
+#include "oclmd/System.h"
 #include "oclmd/NonBondedForce.h"
 
 #endif /*OclMD_h*/

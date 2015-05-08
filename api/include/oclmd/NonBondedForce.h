@@ -201,10 +201,10 @@ public:
     double getCutOffDistance() const;
     
     /// getList of LJPairs
-    vector<OclMD::NonBondedForce::LJPairs>& getListLJPairs();
+    std::vector<OclMD::NonBondedForce::LJPairs>& getListLJPairs();
     
     /// get list of ParticleInfo
-    vector<NonBondedForce::ParticleInfo>& getListParticleInfo();
+    std::vector<NonBondedForce::ParticleInfo>& getListParticleInfo();
     
 protected:
     ForceImpl* createImpl();
@@ -221,13 +221,13 @@ private:
      * the vector list of ParticleInfo
      * stores information about each type of molecule
      */
-    vector<ParticleInfo> moleculeList_;
+    std::vector<ParticleInfo> moleculeList_;
     /**
      * The vector list of LJPairs
      * will contain list of LJ potential to be calculated
      * between atoms of molecules
      */
-    vector<LJPairs> ljpairList_;
+    std::vector<LJPairs> ljpairList_;
     
 };// end class
 

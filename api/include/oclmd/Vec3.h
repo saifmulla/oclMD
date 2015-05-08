@@ -23,11 +23,11 @@ public:
         data_[2] = z;
     }
     
-    //copy constructor to disable default copy
+    //copy constructor
     Vec3(const Vec3& copyme){
-        data_[0] = copyme[0];
-        data_[1] = copyme[1];
-        data_[2] = copyme[2];
+        data_[0] = copyme.data_[0];
+        data_[1] = copyme.data_[1];
+        data_[2] = copyme.data_[2];
     }
     
     Real operator[](const int index) const {
@@ -44,10 +44,21 @@ public:
             throw OclMDException("Vec3:: Array out of bound operator[]");
     }
     
-    Vec3 operator=(const Vec3& lhs){
-        data_[0] = lhs[0];
-        data_[1] = lhs[1];
-        data_[2] = lhs[2];
+    Vec3& operator=(const Vec3& lhs){
+        /**
+         * for safety of self assignment while assignment operator
+         * overloading, check address of this object and parameter
+         * if they are same simply return this pointer or else
+         * do manual assignment for a different object
+         */
+        if(this == &lhs)
+            return *this;
+        
+        data_[0] = lhs.data_[0];
+        data_[1] = lhs.data_[1];
+        data_[2] = lhs.data_[2];
+        
+        return *this;
     }
     
     Vec3 operator*(const Vec3& rhs) {
@@ -118,7 +129,7 @@ inline Real MagSqr(Vec3& data){
 }
 
 inline Real Mag(Real magsqr){
-    return SQRT(magsqr);
+    return std::SQRT(magsqr);
 }
     
 }//end namespace

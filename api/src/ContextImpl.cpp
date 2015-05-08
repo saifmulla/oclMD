@@ -8,7 +8,8 @@
 
 
 /// default constructor
-OclMD::ContextImpl::ContextImpl(System& system, Platform* platform):system_(system),platform_(platform),forceImpls_(0)
+OclMD::ContextImpl::ContextImpl(System& system, Platform* platform)
+:system_(system),forceImpls_(0),platform_(platform)
 {
     /// first check if the system contains more than zero number of particles
     if(system.getNumParticles()==0)
@@ -81,7 +82,7 @@ void OclMD::ContextImpl::getPotentialEnergy(std::vector<Real>& pe){
 }
 
 Real OclMD::ContextImpl::getTotalEnergy() {
-    
+    return 0.0;
 }
 
 void OclMD::ContextImpl::CalculateForcesandEnergy(){

@@ -61,7 +61,7 @@ public:
     }
     
     /// assignment operator overloaded
-    Tensor operator=(const Tensor<Type>& rhs){
+    Tensor& operator=(const Tensor<Type>& rhs){
         this->data_[0] = rhs.data_[0];
         this->data_[1] = rhs.data_[1];
         this->data_[2] = rhs.data_[2];
@@ -71,6 +71,7 @@ public:
         this->data_[6] = rhs.data_[6];
         this->data_[7] = rhs.data_[7];
         this->data_[8] = rhs.data_[8];
+        return *this;
     }
     
     // index operator overloading
@@ -89,7 +90,7 @@ public:
             throw OclMDException("Tensor: Array Index out of bound operator[]");
     }
     
-    Tensor operator+=(const Tensor& rhs){
+    Tensor& operator+=(const Tensor& rhs){
         data_[0] += rhs[0];
         data_[1] += rhs[1];
         data_[2] += rhs[2];
@@ -99,6 +100,7 @@ public:
         data_[6] += rhs[6];
         data_[7] += rhs[7];
         data_[8] += rhs[8];
+        return *this;
     }
     
     /// accessor functions

@@ -10,7 +10,7 @@
 #include "oclmd/System.h"
 
 OclMD::System::System()
-:moleculeSize_(1),masses_(0),forces_(0)
+:moleculeSize_(1),forces_(0),masses_(0)
 {
     dimensions_[0] = Vec3(2,0,0);
     dimensions_[1] = Vec3(0,2,0);
@@ -18,7 +18,7 @@ OclMD::System::System()
 }
 
 OclMD::System::System(const Vec3 boxDimensions[], int moleculeSize)
-:moleculeSize_(moleculeSize),masses_(0),forces_(0)
+:moleculeSize_(moleculeSize),forces_(0),masses_(0)
 {
     dimensions_[0] = Vec3(boxDimensions[0]);
     dimensions_[1] = Vec3(boxDimensions[1]);

@@ -25,8 +25,6 @@ private:
     Vec3 dimensions_[3];
     //    int numParticles_;
     int moleculeSize_;
-    double* moleculeMasses_;
-    double* moleculeCharges_;
     std::vector<Force*> forces_;
     std::vector<Real> masses_;
     

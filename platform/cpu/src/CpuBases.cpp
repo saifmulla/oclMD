@@ -52,7 +52,7 @@ Real OclMD::CpuBaseCalculateForcesAndEnergy::calculate(ContextImpl& context){
 #ifdef FULLDEBUG
     std::cout << "calculating CpuBaseCalculateForcesAndEnergy" << std::endl;
 #endif
-    
+    return 0.0;
 }
 
 /// definition of class CpuBaseData
@@ -138,7 +138,7 @@ Real OclMD::CpuBaseCalculateNonBondedForce::calculate(ContextImpl& context)
                                  extractPE(context),
                                  extractVirial(context));
     
-                                 
+    return 0.0;
 }
 
 

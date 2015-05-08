@@ -77,4 +77,5 @@ void OclMD::NonBondedForceImpl::initialise(ContextImpl& context)
 
 Real OclMD::NonBondedForceImpl::calculateForces(ContextImpl& context){
     baseKernel_.getAs<OclMD::BaseCalculateNonBondedForce>().calculate(context);
+    return 0.0;
 }
