@@ -12,10 +12,9 @@
 #include "oclmd/Vec3.h"
 #include "oclmd/System.h"
 #include "oclmd/NonBondedForce.h"
+#include "oclmd/Solver.h"
 #include "CpuPlatform.h"
-#include "oclmd/impl/ContextImpl.h"
 #include "gtest/gtest.h"
-//#include "gmock/gmock.h"
 #include <vector>
 
 
@@ -26,25 +25,29 @@ TEST(TestNonBondedIxn,oneatomljpair){
     System system;
     system.addParticle(1.0);
     system.addParticle(1.0);
+    system.addCharge(1.0);
+    system.addCharge(1.0);
+    
     NonBondedForce* nb = new NonBondedForce();
     nb->addParticle(1.0,0);
     nb->addLJPair(1.2,1.0,2.0,1.0,1.0,0,0);
 //    nb->addLJPair(1.4,2.0,2.0,1.0,1.0,0,0);
     system.addForce(nb);
-    CpuPlatform* platform = new CpuPlatform();
-    ContextImpl context(system,platform);
+//    CpuPlatform* platform = new CpuPlatform();
+//    ContextImpl context(system,platform);
+    Solver solve(system);
     vector<Vec3> positions(2);
     positions[0] = Vec3(0,0,0);
     positions[1] = Vec3(2,0,0);
-    context.setPositions(positions);
-    context.CalculateForcesandEnergy();
+    solve.setPositions(positions);
+    solve.getImpl().CalculateForcesandEnergy();
     
     vector<Vec3> forces(2);
-    context.getForces(forces);
+    solve.getForces(forces);
     vector<double> pe(2);
-    context.getPotentialEnergy(pe);
+    solve.getPotentialEnergy(pe);
     vector<Tensor<double> > virial(2);
-    context.getVirial(virial);
+    solve.getVirial(virial);
     
     /// calculate force equation
     Vec3 diff = positions[1] - positions[0];

@@ -2,14 +2,16 @@
 #include "oclmd/Base.h"
 #include "oclmd/BaseInterfaces.h"
 #include "oclmd/System.h"
+#include "oclmd/Solver.h"
 #include "oclmd/Force.h"
 #include "oclmd/impl/ContextImpl.h"
 #include "oclmd/impl/ForceImpl.h"
+#include "CpuPlatform.h"
 
 
 /// default constructor
-OclMD::ContextImpl::ContextImpl(System& system, Platform* platform)
-:system_(system),forceImpls_(0),platform_(platform)
+OclMD::ContextImpl::ContextImpl(Solver& solver,System& system, Platform* platform)
+:owner_(solver),system_(system),forceImpls_(0),platform_(platform)
 {
     /// first check if the system contains more than zero number of particles
     if(system.getNumParticles()==0)
@@ -18,7 +20,7 @@ OclMD::ContextImpl::ContextImpl(System& system, Platform* platform)
     /// if platform object not explicitly passed
     /// then consider default platform which is CPU
     if(platform_==0){
-//        CpuPlatform* platform = new CpuPlatform();
+        CpuPlatform* platform = new CpuPlatform();
         platform_ = platform;
     }
     Platform::registerPlatform(platform_);

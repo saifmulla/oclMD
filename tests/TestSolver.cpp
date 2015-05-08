@@ -1,32 +1,30 @@
 //
-//  TestContextImplement.cpp
+//  TestSolver.cpp
 //  OclMD
 //
-//  Created by Saif Mulla on 27/04/2015.
+//  Created by Saif Mulla on 08/05/2015.
 //
 //
 
 #include <stdio.h>
 #include <iostream>
-//#include "mocks/Mock_Platform.h"
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include "oclmd/Vec3.h"
-#include "oclmd/impl/ContextImpl.h"
-//#include "CpuPlatform.h"
 #include "oclmd/System.h"
+#include "oclmd/Solver.h"
 #include "oclmd/NonBondedForce.h"
 
 using namespace OclMD;
 
-TEST(TestContextImpl, construct){
-    System s;
+TEST(TestSolver, construct){
+    System s;
+    s.addParticle(1.0);
+    s.addCharge(1.0);
     NonBondedForce nbf(1);
     nbf.addLJPair(0.12,0.0034,0.0,0.0,0.1,1,1);
     s.addParticle(2.0);
     s.addForce(&nbf);
-//    MockPlatform* cpu = new CpuPlatform();
-//    OclMD::ContextImpl context(s,cpu);
+    Solver solve(s);
     SUCCEED();
 }
 

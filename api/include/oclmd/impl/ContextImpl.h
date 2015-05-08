@@ -24,7 +24,6 @@
 
 #include "oclmd/Base.h"
 #include "oclmd/Platform.h"
-//#include "CpuPlatform.h"
 #include "oclmd/Vec3.h"
 #include "oclmd/Tensor.h"
 
@@ -33,11 +32,11 @@ namespace OclMD {
 /// forward declarations
 class System;
 class ForceImpl;
-
+class Solver;
 
 class ContextImpl {
 public:
-    ContextImpl(System& system, Platform* platform);
+    ContextImpl(Solver& owner, System& system, Platform* platform);
     
     /// destructor
     ~ContextImpl();
@@ -58,6 +57,9 @@ public:
         return *platform_;
     }
     
+    Solver& getOwner(){
+        return owner_;
+    }
     System& getSystem();
     
     /// set the datastructure for internal platform
@@ -68,6 +70,8 @@ public:
     
 //    const void* getPlatformData() const;
 private:
+    friend class Solver;
+    Solver& owner_;
     System& system_;
     std::vector<OclMD::ForceImpl*> forceImpls_;
     Base forceKernel, internalDataBase;

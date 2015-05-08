@@ -27,6 +27,7 @@ private:
     int moleculeSize_;
     std::vector<Force*> forces_;
     std::vector<Real> masses_;
+    std::vector<Real> charges_;
     
 public:
     System();
@@ -40,6 +41,8 @@ public:
     void setDimensions(const Vec3& x,const Vec3& y,const Vec3& z);
     
     int addParticle(Real mass);
+    
+    int addCharge(Real charge);
     
     int getNumParticles() const;
     
