@@ -17,7 +17,7 @@
 using namespace OclMD;
 
 TEST(TestSolver, construct){
-    System s;
+    System s;
     s.addParticle(1.0);
     s.addCharge(1.0);
     NonBondedForce nbf(1);
