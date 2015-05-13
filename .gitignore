@@ -1,12 +1,17 @@
 *~
-build
+*build
 Makefile
-*.dylib
 *.a
 *.so
 xcode
-gtest
 *.kdev*
 CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
+##########
+## changes relevant to development
+### and mac
+#*.dylib
+#build.*
+#Debug
+#Release

@@ -8,14 +8,14 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "RealType.h"
+#include "oclmd/RealType.h"
 #include "gtest/gtest.h"
 
 
 TEST(TestRealType,checksize){
-    ASSERT_EQ(REALSIZE,sizeof(Real));
+ASSERT_EQ(REALSIZE,sizeof(Real));
 }
 int main(int argc, char *argv[]){
-    ::testing::InitGoogleTest(&argc,argv);
-    return RUN_ALL_TESTS();
+::testing::InitGoogleTest(&argc,argv);
+return RUN_ALL_TESTS();
 }

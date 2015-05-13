@@ -20,11 +20,16 @@
 #ifndef __OclMD__CpuPlatform__
 #define __OclMD__CpuPlatform__
 
-#include "RealType.h"
-#include "Vec3.h"
-#include "Platform.h"
 #include <vector>
 #include <iostream>
+
+#include "oclmd/Platform.h"
+#include "oclmd/RealType.h"
+#include "oclmd/Vec3.h"
+#include "oclmd/Tensor.h"
+#include "oclmd/System.h"
+#include "oclmd/impl/ContextImpl.h"
+#include "CpuBaseFactory.h"
 
 namespace OclMD {
 
@@ -32,12 +37,16 @@ class CpuPlatform : public Platform {
 public:
     /// forward declaration for obtaining platform data
     class PlatformData;
+
     /**
      * Constructor which is presently left blank with no significant
      * initilalisations
      */
     CpuPlatform();
-    
+
+    /// default destructor
+    ~CpuPlatform(){}
+
     /// this a implementation of pure virtual function
     const std::string& getName() const {
         static const std::string name = "CPU";
@@ -47,8 +56,16 @@ public:
     /// definition of pure virtual function in this class
     bool supportsDoublePrecision() const;
     
-    /// default destructor
-    ~CpuPlatform(){}
+    /// create internal datastructure for platformData
+    void createData(ContextImpl& context) const;
+    
+    /// delete the internal datastructure for platformdata
+    void deleteData(ContextImpl& context) const;
+    
+    BaseFactory* getBaseFactory() const;
+    
+private:
+    CpuBaseFactory* factory;
 };
 
 /**
@@ -74,6 +91,8 @@ public:
     Real time_;
     void* positions_;
     void* forces_;
+    void* virial_;
+    void* pE_;
     void* periodicBoxSize_;
 };
 }//end namespace

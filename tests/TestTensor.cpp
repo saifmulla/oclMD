@@ -7,7 +7,8 @@
 //
 
 #include <stdio.h>
-#include "Tensor.h"
+#include "oclmd/Vec3.h"
+#include "oclmd/Tensor.h"
 #include "gtest/gtest.h"
 
 using namespace OclMD;
@@ -40,6 +41,25 @@ TEST(TestTensor,assignment2){
     ASSERT_EQ(0.002987,t[6]);
 }
 
+TEST(TestTensor,vectors){
+    std::vector<Tensor<double> > t(10);
+}
+
+TEST(TestTensor,outerproduct){
+    Vec3 x(2.0,3.0,4.0);
+    Vec3 y(2.0,3.0,4.0);
+    Tensor<double> t = outerProduct<double>(x,y);
+    ASSERT_EQ(6.0,t[1]);
+}
+
+TEST(TestTensor, plusadd){
+    Tensor<double> t1(0.245,0.986,0.2,0.0,0.0,0.0,0.0,0.0,0.000465);
+    Tensor<double> t2(0.245,0.986,0.2,0.0,0.0,0.0,0.0,0.0,0.000465);
+    t1 += t2;
+    ASSERT_EQ(0.4,t1[2]);
+    ASSERT_EQ(1.972,t1[1]);
+    
+}
 
 int main(int argc, char *argv[]){
     ::testing::InitGoogleTest(&argc,argv);
