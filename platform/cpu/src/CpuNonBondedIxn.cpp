@@ -32,6 +32,8 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
         vector atomI = positions[i];/// get one atom for atom I
         for (int j = i+1; j<numberParticles;j++)
         {
+            ///periodic boundary condition
+            
             /// get one atom for atom interaction
             vector atomJ = positions[j];
             Real fraction = 1.0;
@@ -55,19 +57,15 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
              * rCutSqr defined for the LJ pair if it is within
              * then perform pair-wise force calculation
              */
-#ifdef FULLDEBUG
-            printf("MagSqr in NBIXN %3.8f and rcutsqr %3.8f\n",rsIsJMagSq,lj.rCutSqr);
-#endif
 
-            if(rsIsJMagSq <= lj.rCutSqr)
+            if(rsIsJMagSq < lj.rCutSqr)
             {
                 Real rsIsJMag = Mag(rsIsJMagSq);
                 
                 Real force = forceLJPairs(rsIsJMag,lj.sigma,lj.epsilon);
-                
-                force *= 1.0 * rsIsJMag;
-                
-                vector forceContribution = rsIsJ/force;
+                force *= 1.0;
+                vector forceContribution = rsIsJ/rsIsJMag;
+                forceContribution *= force; // multiply the force result with vector
                 
                 //add calculated force to each atomic force
                 forces[i] += forceContribution;
@@ -103,9 +101,9 @@ Real OclMD::CpuNonBondedIxn::forceLJPairs(const Real rij,
     Real rij13 = POW(rij,13);
     Real rij7 = POW(rij,7);
     
-    Real numerator1 = -48 * epsilon * ps12;
+    Real numerator1 = 48 * epsilon * ps12;
     numerator1 /= rij13;
-    Real numerator2 = 24 * epsilon * ps6;
+    Real numerator2 = -24 * epsilon * ps6;
     numerator2 /= rij7;
     /// return the result back
     return (numerator1 + numerator2);

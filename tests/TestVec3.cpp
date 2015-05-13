@@ -59,6 +59,12 @@ TEST(TestVec3, scalarMultiply){
     ASSERT_EQ(4.0,scalar[0]);
 }
 
+TEST(TestVec3, multiplyaddscalar){
+    Vec3 x(0.22,0.33,0.44);
+    x *= 0.22;
+    ASSERT_EQ(0.0484, x[0]);
+}
+
 TEST(TestVec3, multiplication){
     Vec3 x(0.22,0.33,0.44);
     Vec3 y(0.22,0.33,0.44);

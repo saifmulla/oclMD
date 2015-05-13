@@ -1,5 +1,6 @@
 #include "oclmd/Solver.h"
 #include "oclmd/impl/ContextImpl.h"
+#include "oclmd/RealType.h"
 #include "oclmd/Vec3.h"
 
 
@@ -38,6 +39,10 @@ void OclMD::Solver::getPotentialEnergy(std::vector<Real>& pe){
     impl->getPotentialEnergy(pe);
 }
 
+Real OclMD::Solver::calculateForcesandEnergy(){
+    impl->CalculateForcesandEnergy();
+    return 0.0;
+}
 OclMD::ContextImpl& OclMD::Solver::getImpl(){
     return *impl;
 }

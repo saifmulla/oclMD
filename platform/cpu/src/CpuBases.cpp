@@ -46,6 +46,16 @@ void OclMD::CpuBaseCalculateForcesAndEnergy::prepare(ContextImpl& context){
 #ifdef FULLDEBUG
     std::cout << "prepare on CpuBaseCalculateForcesAndEnergy" << std::endl;
 #endif
+    /// zero all data structure
+    std::vector<OclMD::Vec3>& forces = extractForces(context);
+    std::vector<OclMD::Tensor<double> >& virial = extractVirial(context);
+    std::vector<double>& pe = extractPE(context);
+    
+    for (int i = 0; i <context.getSystem().getNumParticles(); i++) {
+        forces[i] = OclMD::Vec3(0.0,0.0,0.0);
+        virial[i] = OclMD::Tensor<double>(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
+        pe[i] = 0.0;
+    }
 }
 
 Real OclMD::CpuBaseCalculateForcesAndEnergy::calculate(ContextImpl& context){

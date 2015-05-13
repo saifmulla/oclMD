@@ -30,7 +30,7 @@ TEST(TestNonBondedIxn,oneatomljpair){
     
     NonBondedForce* nb = new NonBondedForce();
     nb->addParticle(1.0,0);
-    nb->addLJPair(1.2,1.0,2.0,1.0,1.0,0,0);
+    nb->addLJPair(1.2,1.0,3.0,1.0,1.0,0,0);
 //    nb->addLJPair(1.4,2.0,2.0,1.0,1.0,0,0);
     system.addForce(nb);
 //    CpuPlatform* platform = new CpuPlatform();
@@ -57,13 +57,14 @@ TEST(TestNonBondedIxn,oneatomljpair){
     MagSqr += diff[2] * diff[2];
     
     Real mag = SQRT(MagSqr);
-    Real num1 = -48 * 1.0 * POW(1.2,12);
+    Real num1 = 48 * 1.0 * POW(1.2,12);
     num1 /= POW(mag,13);
-    Real num2 = 24 * 1.0 * POW(1.2,6);
+    Real num2 = -24 * 1.0 * POW(1.2,6);
     num2 /= POW(mag,7);
     Real force = num1 + num2;
-    force *= mag;
-    Vec3 expectForce = diff/force;
+//    force *= 1.0;
+    Vec3 expectForce = (diff/mag)*1.0*force;
+//    expectForce *= force;
     
     /// test force equation with resultant forces
     EXPECT_DOUBLE_EQ(-expectForce[0],forces[0][0]);
@@ -72,7 +73,7 @@ TEST(TestNonBondedIxn,oneatomljpair){
     EXPECT_DOUBLE_EQ(expectForce[0],forces[1][0]);
     EXPECT_DOUBLE_EQ(expectForce[1],forces[1][1]);
     EXPECT_DOUBLE_EQ(expectForce[2],forces[1][2]);
-    
+
     ///calculate energy equation to test calculated values
     
     Real e1 = POW(1.2,12)/POW(mag,12);
@@ -84,8 +85,6 @@ TEST(TestNonBondedIxn,oneatomljpair){
     
     std::cout << "V0 => " << virial[0] << std::endl;
     std::cout << "V1 => " << virial[1] << std::endl;
-    
-    
     
     
 }

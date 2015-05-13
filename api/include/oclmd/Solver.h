@@ -46,6 +46,16 @@ public:
     /// get object of ContextImpl
     ContextImpl& getImpl();
     
+    /// invoke calculate forces and energy
+    /**
+     * TODO: delete later
+     * consider this function temporary as it invalidates the
+     * concept of API's, essentially this should be invoked 
+     * from another internal class such as an integrator
+     * in future
+     */
+    Real calculateForcesandEnergy();
+    
 private:
     friend class Platform;
     ContextImpl* impl;

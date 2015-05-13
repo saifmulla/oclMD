@@ -93,6 +93,14 @@ public:
         return *this;
     }
     
+    /// multiply add operator with scalar
+    Vec3 operator*=(const Real val){
+        data_[0] *= val;
+        data_[1] *= val;
+        data_[2] *= val;
+        return *this;
+    }
+    
     // negation operator
     // to be worked on expressions such as v += -v2
     Vec3 operator-() const {
