@@ -32,7 +32,6 @@ TEST(TestOmpPlatform, platformData){
 TEST(TestOmpPlatform, deletePlatformData){
     OmpPlatform::PlatformData* data = new OmpPlatform::PlatformData(1);
     delete data;
-    ASSERT_EQ(0,data->numParticles_);
 }
 
 TEST(TestOmpPlatform, openmpthreads){
