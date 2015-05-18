@@ -72,7 +72,7 @@ ENDIF(NOT GMOCK_DIR)
 
 # just added a variable with src directory name embedded
 SET(SRC_SUBDIRS "src")
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/base/include ${CMAKE_CURRENT_SOURCE_DIR}/api/include ${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/include)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/base/include ${CMAKE_CURRENT_SOURCE_DIR}/api/include ${CMAKE_CURRENT_SOURCE_DIR}/platform/cpu/include ${CMAKE_CURRENT_SOURCE_DIR}/platform/omp/include)
 
 # start compiling each source file
 # this list is for the API source files
@@ -98,6 +98,16 @@ GET_FILENAME_COMPONENT(FILENAME ${CPUSRC} NAME)
 SET(FILENAME_LIST ${FILENAME_LIST} platform/cpu/src/${FILENAME})
 ENDFOREACH(CPUSRC ${CPUSRC_FILES})
 
+#find library does not works with any compiler
+# therefore find_package is a convinient option
+FIND_PACKAGE(OpenMP QUIET)
+IF(OPENMP_FOUND)
+    MESSAGE("Compiler supports OpenMP! installing OMP platform")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    SET(FILENAME_LIST ${FILENAME_LIST} platform/omp/src/OmpBaseFactory.cpp)
+    SET(FILENAME_LIST ${FILENAME_LIST} platform/omp/src/OmpPlatform.cpp)
+ENDIF(OPENMP_FOUND)
+
 ADD_LIBRARY(${SHARED_TARGET} SHARED ${FILENAME_LIST}) #use all the *.cpp codes to create a library
 
 #enable testing and add subdir 'tests'
@@ -105,9 +115,13 @@ ADD_SUBDIRECTORY(tests)
 #add test directory for platforms
 ADD_SUBDIRECTORY(platform/tests)
 
+#add test directory of OMP tests
+IF(OPENMP_FOUND)
+    ADD_SUBDIRECTORY(platform/omp/tests)
+ENDIF(OPENMP_FOUND)
+
 #testing is enabled
 ENABLE_TESTING()
-
 
 #instal API
 #TODO - later make provisions for user supplied path
