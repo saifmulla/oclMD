@@ -8,4 +8,4 @@ script:
   - cd _builds
   - cmake ../
   - make
-  - ./platform/omp/tests/TestOmpPlatform
+  - ctest 
