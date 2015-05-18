@@ -11,8 +11,7 @@
 
 
 OclMD::NonBondedForceImpl::NonBondedForceImpl(OclMD::NonBondedForce& owner)
-:owner_(owner),ljPairs_(0),listParticles_(0),maxRcut_(0.0),maxRcutSqr_(0.0),
-siteIds_(0)
+:owner_(owner),ljPairs_(0),listParticles_(0),siteIds_(0),maxRcut_(0.0),maxRcutSqr_(0.0)
 {
 }
 
