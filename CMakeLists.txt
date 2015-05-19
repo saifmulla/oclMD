@@ -106,6 +106,8 @@ IF(OPENMP_FOUND)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
     SET(FILENAME_LIST ${FILENAME_LIST} platform/omp/src/OmpBaseFactory.cpp)
     SET(FILENAME_LIST ${FILENAME_LIST} platform/omp/src/OmpPlatform.cpp)
+    SET(FILENAME_LIST ${FILENAME_LIST} platform/omp/src/OmpBases.cpp)
+    SET(FILENAME_LIST ${FILENAME_LIST} platform/omp/src/OmpNonBondedIxn.cpp)
 ENDIF(OPENMP_FOUND)
 
 ADD_LIBRARY(${SHARED_TARGET} SHARED ${FILENAME_LIST}) #use all the *.cpp codes to create a library

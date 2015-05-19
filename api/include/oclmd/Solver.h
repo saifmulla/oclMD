@@ -18,6 +18,13 @@ public:
     /// constructor only taking System ojbect
     Solver(System& system);
     
+    /**
+     * Overloaded constructor
+     * @param System
+     * @param Platform
+     */
+    Solver(System& system, Platform* platform);
+    
     /// destructor
     
     ~Solver();

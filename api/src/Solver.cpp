@@ -8,6 +8,9 @@ OclMD::Solver::Solver(System& system){
     impl = new OclMD::ContextImpl(*this,system,0);
 }
 
+OclMD::Solver::Solver(System& system, Platform* platform){
+    impl = new OclMD::ContextImpl(*this,system,platform);
+}
 OclMD::Solver::~Solver(){
     delete impl;
 }
@@ -43,6 +46,7 @@ Real OclMD::Solver::calculateForcesandEnergy(){
     impl->CalculateForcesandEnergy();
     return 0.0;
 }
+
 OclMD::ContextImpl& OclMD::Solver::getImpl(){
     return *impl;
 }
