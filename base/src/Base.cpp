@@ -14,10 +14,6 @@ OclMD::Base::Base(const Base& copy) : impl(copy.impl){
 
 OclMD::Base::~Base(){
     if(impl){
-#ifdef FULLDEBUG
-        std::cout << "Destructor in Base, reference counter "
-        << impl->referenceCounter << std::endl;
-#endif
         impl->referenceCounter--;
         if(impl->referenceCounter == 0)
             delete impl;

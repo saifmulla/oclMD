@@ -27,9 +27,6 @@ bool OclMD::CpuPlatform::supportsDoublePrecision() const {
 
 void OclMD::CpuPlatform::createData(ContextImpl& context) const {
     context.setPlatformData(new CpuPlatform::PlatformData(context.getSystem().getNumParticles()));
-#ifdef FULLDEBUG
-    std::cout << "CPU platform data created " << std::endl;
-#endif
 }
 
 void OclMD::CpuPlatform::deleteData(ContextImpl& context) const {
@@ -47,10 +44,6 @@ OclMD::CpuPlatform::PlatformData::PlatformData(int numParticles)
 }
 
 OclMD::CpuPlatform::PlatformData::~PlatformData(){
-#ifdef FULLDEBUG
-    std::cout<< "PlatformData deleted" << std::endl;
-#endif
-    
     delete (std::vector<OclMD::Vec3>*) positions_;
     delete (std::vector<OclMD::Vec3>*) forces_;
     delete (OclMD::Vec3*) periodicBoxSize_;

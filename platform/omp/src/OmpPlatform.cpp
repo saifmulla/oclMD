@@ -17,6 +17,7 @@ void OclMD::OmpPlatform::createData(ContextImpl& context) const {
 
 void OclMD::OmpPlatform::deleteData(ContextImpl& context) const {
     OmpPlatform::PlatformData* data = reinterpret_cast<OmpPlatform::PlatformData*>(context.getPlatformData());
+    delete data;
 }
 
 OclMD::OmpPlatform::PlatformData::PlatformData(int numParticles)
@@ -34,5 +35,4 @@ OclMD::OmpPlatform::PlatformData::~PlatformData(){
     delete (OclMD::Vec3*) periodicBoxSize_;
     delete (std::vector<OclMD::Tensor<double> >*) virial_;
     delete (std::vector<Real>*) pE_;
-    numParticles_ = 0;
 }

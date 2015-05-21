@@ -25,9 +25,6 @@ OclMD::NonBondedForceImpl::LJInfo** OclMD::NonBondedForceImpl::getLJInfo() const
 void OclMD::NonBondedForceImpl::initialise(ContextImpl& context)
 {
 
-#ifdef FULLDEBUG
-    std::cout << "Initialising NonBondedForceImpl " << std::endl;
-#endif
     /// create object of internal Base class of this class for appropriate platform.
     baseKernel_ = context.getPlatform().createBase(
                                                    OclMD::BaseCalculateNonBondedForce::className(),

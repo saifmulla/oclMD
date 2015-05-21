@@ -9,9 +9,108 @@
 #include "CpuPlatform.h"
 #include "gtest/gtest.h"
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
+
 
 using namespace OclMD;
 using namespace std;
+
+
+
+TEST(TestOmpNonBondedIxn,ljpairbigCpuOmpCompare){
+    
+    System systemcpu;
+    System systemomp;
+    ifstream ifsparticle("particles.txt");
+    char buffer[100];
+    if (!ifsparticle)
+        cout << "cannot read particles.txt file" << endl;
+    
+    while (ifsparticle.getline(buffer,100,'\n')) {
+        systemcpu.addParticle(1.0);
+        systemomp.addParticle(1.0);
+    }
+    ifsparticle.close();
+
+    NonBondedForce* nb = new NonBondedForce();
+    nb->addParticle(1.0,0);
+    ifstream ifscp("ljpairs.txt");
+    if (!ifscp)
+        cout << "cannot read ljpairs.txt file" << endl;
+    
+    while (ifscp.getline(buffer,100,'\n')) {
+        istringstream ss(buffer);
+        string token;
+        std::vector<double> readvals;
+        while (std::getline(ss,token,',')) {
+            readvals.push_back(atof(token.c_str()));
+        }
+        nb->addLJPair(readvals[0],readvals[1],readvals[2],
+                      readvals[3],readvals[4],readvals[5],readvals[6]);
+    }//end cpproperties loop
+    ifscp.close();
+    
+    systemcpu.addForce(nb);
+    systemomp.addForce(nb);
+    
+    OmpPlatform* ompplatform = new OmpPlatform();
+    Solver solvecpu(systemcpu);
+    Solver solveomp(systemomp,ompplatform);
+
+    vector<Vec3> positions(systemcpu.getNumParticles());
+    
+    ifstream ifpos("positions.txt");
+    if (!ifpos)
+        cout << "cannot read positions.txt file" << endl;
+    
+    int iter = 0;
+    while (ifpos.getline(buffer,100,'\n')) {
+        istringstream ss(buffer);
+        string token;
+        std::vector<double> readvals;
+        while (std::getline(ss,token,',')) {
+            readvals.push_back(atof(token.c_str()));
+        }
+        positions[iter] = Vec3(readvals[0],readvals[1],readvals[2]);
+        iter++;
+    }//end cpproperties loop
+    ifpos.close();
+    
+    /// set positions and calculate forces for CPU
+    solvecpu.setPositions(positions);
+    solvecpu.getImpl().CalculateForcesandEnergy();
+    EXPECT_EQ(512,systemcpu.getNumParticles());
+    vector<Vec3> forces(systemcpu.getNumParticles());
+    solvecpu.getForces(forces);
+    vector<double> pe(systemcpu.getNumParticles());
+    solvecpu.getPotentialEnergy(pe);
+    
+    /// set positions and calculate forces for OMP
+    solveomp.setPositions(positions);
+    solveomp.getImpl().CalculateForcesandEnergy();
+    vector<Vec3> forcesomp(systemomp.getNumParticles());
+    solveomp.getForces(forcesomp);
+    vector<double> peomp(systemomp.getNumParticles());
+    solveomp.getPotentialEnergy(peomp);
+
+    int N = 10;
+    for (int i = 0; i < systemcpu.getNumParticles(); i++) {
+        EXPECT_NEAR(forces[i][0],forcesomp[i][0],0.00000001);
+        EXPECT_NEAR(forces[i][1],forcesomp[i][1],0.00000001);
+        EXPECT_NEAR(forces[i][2],forcesomp[i][2],0.00000001);
+        EXPECT_NEAR(pe[i],peomp[i],0.00000001);
+    }
+    
+    positions.clear();
+    forces.clear();
+    forcesomp.clear();
+    pe.clear();
+    peomp.clear();
+    delete nb;
+    
+}
 
 
 TEST(TestOmpNonBondedIxn,oneatomljpair){
@@ -73,11 +172,6 @@ TEST(TestOmpNonBondedIxn,oneatomljpair){
     /// compare result
     EXPECT_DOUBLE_EQ(expectpe,pe[0]);
     EXPECT_DOUBLE_EQ(expectpe,pe[1]);
-    
-    std::cout << "V0 => " << virial[0] << std::endl;
-    std::cout << "V1 => " << virial[1] << std::endl;
-
-
 }
 
 TEST(TestOmpNonBondedIxn, ljpairCpuOmpCompare){

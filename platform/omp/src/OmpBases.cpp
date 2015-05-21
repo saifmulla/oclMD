@@ -27,15 +27,9 @@ static OclMD::Vec3& extractBoxDimensions(OclMD::ContextImpl& context){
 }
 
 void OclMD::OmpBaseCalculateForcesAndEnergy::initialise(const System& system){
-#ifdef FULLDEBUG
-    std::cout << "Initialising OmpBaseCalculateForcesAndEnergy" << std::endl;
-#endif
 }
 
 void OclMD::OmpBaseCalculateForcesAndEnergy::prepare(ContextImpl& context){
-#ifdef FULLDEBUG
-    std::cout << "prepare on OmpBaseCalculateForcesAndEnergy" << std::endl;
-#endif
     /// zero all data structure
     std::vector<OclMD::Vec3>& forces = extractForces(context);
     std::vector<OclMD::Tensor<double> >& virial = extractVirial(context);
@@ -49,9 +43,6 @@ void OclMD::OmpBaseCalculateForcesAndEnergy::prepare(ContextImpl& context){
 }
 
 Real OclMD::OmpBaseCalculateForcesAndEnergy::calculate(ContextImpl& context){
-#ifdef FULLDEBUG
-    std::cout << "calculating OmpBaseCalculateForcesAndEnergy" << std::endl;
-#endif
     return 0.0;
 }
 
@@ -63,10 +54,6 @@ void OclMD::OmpBaseData::initialise(const System& system){
 
 void OclMD::OmpBaseData::setPositions(ContextImpl& context,
                                       const std::vector<Vec3>& positions){
-#ifdef FULLDEBUG
-    std::cout << "setting positions on OmpBaseData" << std::endl;
-#endif
-    
     int numparticles = context.getSystem().getNumParticles();
     std::vector<OclMD::Vec3>& dataPositions = extractPositions(context);
     for(int i = 0; i < numparticles; i++){
@@ -120,17 +107,11 @@ void OclMD::OmpBaseData::getPeriodicBox(ContextImpl& context,
 void OclMD::OmpBaseCalculateNonBondedForce::initialise(const System& system,
                                                        const NonBondedForceImpl& force)
 {
-#ifdef FULLDEBUG
-    std::cout << "Initialising on OmpBaseCalculateNonBondedForce" << std::endl;
-#endif
     nonbondedixn = new OclMD::OmpNonBondedIxn((const OclMD::NonBondedForceImpl::LJInfo**) force.getLJInfo());
 }
 
 Real OclMD::OmpBaseCalculateNonBondedForce::calculate(ContextImpl& context)
 {
-#ifdef FULLDEBUG
-    std::cout << "calculate on OmpBaseCalculateNonBondedForce" << std::endl;
-#endif
     
     nonbondedixn->calculateForces(context.getSystem().getNumParticles(),
                                   extractPositions(context),

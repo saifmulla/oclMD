@@ -24,9 +24,6 @@ void OclMD::CpuNonBondedIxn::calculateForces(int numberParticles,
                                              )
 {
 
-#ifdef FULLDEBUG
-    std::cout << "Calcualting forces inside CPUNONBONDEDIXN" << std::endl;
-#endif
     for (int i=0; i<numberParticles; i++)
     {
         vector atomI = positions[i];/// get one atom for atom I

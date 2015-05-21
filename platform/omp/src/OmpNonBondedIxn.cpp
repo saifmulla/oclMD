@@ -23,22 +23,27 @@ void OclMD::OmpNonBondedIxn::calculateForces(int numberParticles,
                                              std::vector<tensor>& virial
                                              )
 {
+    const Vec3* ptrPositions = &positions[0];
+    Vec3* ptrForces = &forces[0];
+    tensor* ptrVirial = &virial[0];
+    Real* ptrpE = &pE[0];
     
-#ifdef FULLDEBUG
-    std::cout << "Calcualting forces inside OmpNONBONDEDIXN" << std::endl;
-#endif
+    
+#pragma omp parallel for shared(ptrPositions,ptrForces,ptrVirial,ptrpE)
     for (int i=0; i<numberParticles; i++)
     {
-        vector atomI = positions[i];/// get one atom for atom I
+        Vec3 atomI = ptrPositions[i];/// get one atom for atom I
         for (int j = i+1; j<numberParticles;j++)
         {
             ///periodic boundary condition
             
             /// get one atom for atom interaction
-            vector atomJ = positions[j];
+            Vec3 atomJ = ptrPositions[j];
+            
+            /// keep fraction default to 1.0
             Real fraction = 1.0;
             // distance delta between two atoms positions
-            vector rsIsJ = atomI - atomJ;
+            Vec3 rsIsJ = atomI - atomJ;
             //get magnitude square for distance delta
             Real rsIsJMagSq = MagSqr(rsIsJ);
             
@@ -64,12 +69,15 @@ void OclMD::OmpNonBondedIxn::calculateForces(int numberParticles,
                 
                 Real force = forceLJPairs(rsIsJMag,lj.sigma,lj.epsilon);
                 force *= 1.0;
-                vector forceContribution = rsIsJ/rsIsJMag;
+                Vec3 forceContribution = rsIsJ/rsIsJMag;
                 forceContribution *= force; // multiply the force result with vector
                 
                 //add calculated force to each atomic force
-                forces[i] += forceContribution;
-                forces[j] += -forceContribution;
+#pragma omp critical (forces)
+                {
+                ptrForces[i] += forceContribution;
+                ptrForces[j] += -forceContribution;
+                }
                 
                 /**
                  * calculate potential energy based on LJ potential equation
@@ -77,13 +85,19 @@ void OclMD::OmpNonBondedIxn::calculateForces(int numberParticles,
                  * pairs
                  */
                 Real pe = fraction * energyLJPairs(rsIsJMag,lj.sigma,lj.epsilon);
-                pE[i] += 0.5 * pe;
-                pE[j] += 0.5 * pe;
+#pragma omp critical (pe)
+                {
+                ptrpE[i] += 0.5 * pe;
+                ptrpE[j] += 0.5 * pe;
+                }
                 
                 /// calculate virial contribution and add to virial of each atom
-                Tensor<double> virialContribution = outerProduct<double>(forceContribution,rsIsJ);
-                virial[i] += virialContribution;
-                virial[j] += virialContribution;
+                tensor virialContribution = outerProduct<double>(forceContribution,rsIsJ);
+#pragma omp critical (virial)
+                {
+                ptrVirial[i] += virialContribution;
+                ptrVirial[j] += virialContribution;
+                }
                 
                 
             }//end of rcutSqr check

@@ -5,6 +5,7 @@
 #include "oclmd/RealType.h"
 #include "oclmd/Vec3.h"
 #include "oclmd/Tensor.h"
+#include "OmpPlatform.h"
 #include "oclmd/impl/NonBondedForceImpl.h"
 
 namespace OclMD {
