@@ -8,7 +8,4 @@ script:
   - cd _builds
   - cmake ../
   - make
-  - cp ../platform/omp/tests/p*.txt .
-  - cp ../platform/omp/tests/ljpairs.txt .
-  - cp ../platform/omp/tests/constantprop.txt .
   - ctest 

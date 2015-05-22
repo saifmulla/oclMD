@@ -18,7 +18,7 @@ using namespace OclMD;
 using namespace std;
 
 
-
+/*
 TEST(TestOmpNonBondedIxn,ljpairbigCpuOmpCompare){
     
     System systemcpu;
@@ -112,7 +112,7 @@ TEST(TestOmpNonBondedIxn,ljpairbigCpuOmpCompare){
     
 }
 
-
+*/
 TEST(TestOmpNonBondedIxn,oneatomljpair){
     System system;
     system.addParticle(1.0);
