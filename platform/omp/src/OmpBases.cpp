@@ -110,6 +110,9 @@ void OclMD::OmpBaseCalculateNonBondedForce::initialise(const System& system,
     nonbondedixn = new OclMD::OmpNonBondedIxn((const OclMD::NonBondedForceImpl::LJInfo**) force.getLJInfo());
 }
 
+void OclMD::OmpBaseCalculateNonBondedForce::preprocess(){
+    
+}
 Real OclMD::OmpBaseCalculateNonBondedForce::calculate(ContextImpl& context)
 {
     

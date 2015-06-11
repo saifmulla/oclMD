@@ -28,11 +28,33 @@ private:
     std::vector<Force*> forces_;
     std::vector<Real> masses_;
     std::vector<Real> charges_;
+    /**
+     * direct interaction list from OpenFOAM
+     */
+    std::vector<std::vector<int> > dil_;
+    /// neighbourhood cell list
+    std::vector<std::vector<int> > neighbouringCells_;
+    
+    /// number of total cells
+    int nCells_;
+    /// number of total reffered cells
+    int nRefCells_;
+
     
 public:
     System();
     
     System(const Vec3 boxDimensions[], const int moleculesize);
+    
+    /**
+     * parameterised constructor specifically to collect 
+     * cell information and referred cell informatin from 
+     * openfoam
+     */
+    System(const std::vector<std::vector<int> > dil,
+           const std::vector<std::vector<int> > neighbouringCells,
+           int ncells,
+           int nrefcells);
     
     ~System();
     
@@ -62,6 +84,22 @@ public:
     const Force& getForce(int index) const;
     
     Force& getForce(int index);
+    
+    /// get the pointers to dil list
+    const std::vector<std::vector<int> >& getDil() const;
+    
+    /// get pointer to neighbourhood list
+    const std::vector<std::vector<int> >& getNeighbouringCells() const;
+    
+    /// get number of total cells
+    int getnCells() const {
+        return nCells_;
+    }
+    
+    /// get number of referrence cells
+    int getnRefCells() const {
+        return nRefCells_;
+    }
     
 };
     

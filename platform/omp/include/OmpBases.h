@@ -88,6 +88,8 @@ public:
                     const NonBondedForceImpl& force
                     );
     
+    void preprocess();
+    
     Real calculate(ContextImpl& context);
     
 private:

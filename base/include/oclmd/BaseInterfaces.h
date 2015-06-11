@@ -145,6 +145,8 @@ public:
     
     virtual void initialise(const System& system, const NonBondedForceImpl& forceImpl) = 0;
     
+    virtual void preprocess() = 0;
+    
     virtual Real calculate(ContextImpl& context) = 0;
 };
     

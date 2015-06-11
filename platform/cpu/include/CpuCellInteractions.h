@@ -102,6 +102,29 @@ public:
         return nCellsRight_;
     }
     
+    void generateRefferedCells();
+    
+    /**
+     * @section DESCRIPTION
+     * functionname: generateCellInteractionList
+     * this function follows similar pattern
+     * as the pattern used to determine number of total 
+     * cells and its index and based on this assumption 
+     * it generates a list of neighbouring cells to be interacted
+     * for each cell.
+     *
+     */
+    void generateCellInteractionList();
+    
+    /**
+     * @section DESCRIPTION
+     * functioname: generateCelltoPositionsIndexes
+     * @param vector<vec3> positions
+     * This function essentially generates a list of 
+     * cells the positions belongs to and viceversa
+     * which position belongs to which cell.
+     */
+    void generatePositionCellIndexes(std::vector<Vec3>& positions);
     
 private:
     Vec3* referredPositions_;
@@ -117,6 +140,8 @@ private:
     int* referredCells_;
     int* leftSideCells_;
     int* rightSideCells_;
+    int* middleCells_;
+    int** cellInteractionList_;
     int roundedRcut_;
     int totalCornerCells_;
     int nCellsLeft_;

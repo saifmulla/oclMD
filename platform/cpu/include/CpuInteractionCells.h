@@ -1,0 +1,44 @@
+#ifndef OclMD_CpuInteractionCells_h
+#define OclMD_CpuInteractionCells_h
+
+#include <vector>
+#include "oclmd/Vec3.h"
+#include "oclmd/RealType.h"
+
+namespace OclMD {
+    
+class CpuInteractionCells {
+public:
+    CpuInteractionCells(int** dil,
+                        int** neighbouringcells,
+                        const int ncells,
+                        const int nreferredcells);
+    void updateCellOccupancy();
+private:
+    int** dil_; // this is a list of integer list
+    int** neighbouringCells_; // this is a list of integer list
+    /// cellOccupancy is a list of positions which is dynamic vec3 list
+    /// outer list is a list of real cells on the mesh
+    /// inner list is a list of real molecules inside the real cell
+//    std::vector<std::vector<Vec3*> cellOccupancy_;
+    Vec3** cellOccupancy_;
+    
+    /// forces
+//    std::vector<std::vector<Vec3*> forces_;
+    
+    /// referred particles
+    /// outer list is a list of referred cells around mesh
+    /// inner list is a list of referred molecules inside the referred cell
+//    std::vector<std::vector<Vec3*> refCellParticles_;
+    Vec3** refCellParticles_;
+    /// size of total cells
+    int nCells_;
+    int nReferredCells_;
+    
+    
+};
+    
+}//end namespace
+
+
+#endif

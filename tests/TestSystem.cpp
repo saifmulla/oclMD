@@ -32,6 +32,32 @@ TEST(TestSystem, paramConstructor){
     ASSERT_EQ(dimensions[0][0],dimensions2[0][0]);
 }
 
+TEST(TestSystem, paramConstructor2){
+    std::vector<std::vector<int> > dil(2);
+    System s(dil,dil,2,4);
+}
+
+TEST(TestSystem, getterFunctions){
+    std::vector<std::vector<int> > dil(2);
+    dil[0].push_back(0);
+    dil[0].push_back(1);
+    dil[1].push_back(2);
+    dil[1].push_back(3);
+    
+    System s(dil,dil,2,2);
+    
+    ASSERT_EQ(2, s.getnCells());
+    ASSERT_EQ(2, s.getnRefCells());
+    
+    const std::vector<std::vector<int> >& tempdil = s.getDil();
+    ASSERT_EQ(0, dil[0][0]);
+    ASSERT_EQ(3, dil[1][1]);
+    const std::vector<std::vector<int> >& tempneighbours = s.getNeighbouringCells();
+    ASSERT_EQ(1, dil[0][1]);
+    ASSERT_EQ(2, dil[1][0]);
+    
+}
+
 TEST(TestSystem, addForce){
     System s;
     //NonBondedForce *nb;

@@ -10,6 +10,7 @@
 #include "oclmd/impl/NonBondedForceImpl.h"
 #include "CpuPlatform.h"
 #include "CpuNonBondedIxn.h"
+#include "CpuInteractionCells.h"
 
 namespace OclMD {
 //
@@ -26,6 +27,9 @@ public:
     void prepare(ContextImpl& context);
     
     Real calculate(ContextImpl& context);
+    
+private:
+    CpuInteractionCells* interactionCells_;
 };
 
 class CpuBaseData : public BaseData {
@@ -73,10 +77,13 @@ public:
                     const NonBondedForceImpl& force
                     );
     
+    void preprocess();
+    
     Real calculate(ContextImpl& context);
     
 private:
     CpuNonBondedIxn* nonbondedixn;
+    CpuInteractionCells* interactionCells_;
 };
 
 } // end namespace

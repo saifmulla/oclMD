@@ -55,7 +55,7 @@ TEST(TestCellInteractions,unevenBiggerBox){
     
 }
 
-TEST(TestCellInteractions, corneringcells){
+TEST(TestCellInteractions, neighbourhoodlist){
     Vec3 boxDim[3];
     boxDim[0] = Vec3(8.0,0.0,0.0);
     boxDim[1] = Vec3(0.0,8.0,0.0);
@@ -63,18 +63,33 @@ TEST(TestCellInteractions, corneringcells){
     
     CpuCellInteractions* pbc = new CpuCellInteractions(boxDim,2.0);
     pbc->initialise();
-    ASSERT_EQ(40, pbc->getTotalCornerCells());
-    const int* rightcells = pbc->getRightSideCellIndexes();
-//    const int ncellsleft = pbc->getnCellsRight();
-//    ASSERT_EQ(12, ncellsleft);
-    for (int i = 0; i<pbc->getnCellsRight(); i++) {
-        cout << i << " => " << rightcells[i] << endl;
-    }
-    const int* cornercells = pbc->getCorneringCellIndexes();
-    for (int j = 0; j < pbc->getTotalCornerCells(); j++) {
-        cout << j << " => " << cornercells[j] << endl;
-    }
+    pbc->generateCellInteractionList();
 }
+
+TEST(TestCellInteractions, positioncellindexes){
+    Vec3 boxDim[3];
+    boxDim[0] = Vec3(8.0,0.0,0.0);
+    boxDim[1] = Vec3(0.0,8.0,0.0);
+    boxDim[2] = Vec3(0.0,0.0,8.0);
+    
+    CpuCellInteractions* pbc = new CpuCellInteractions(boxDim,2.0);
+    pbc->initialise();
+    vector<Vec3> positions(3);
+    pbc->generatePositionCellIndexes(positions);
+}
+//TEST(TestCellInteractions, corneringcells){
+//    Vec3 boxDim[3];
+//    boxDim[0] = Vec3(8.0,0.0,0.0);
+//    boxDim[1] = Vec3(0.0,8.0,0.0);
+//    boxDim[2] = Vec3(0.0,0.0,8.0);
+//    
+//    CpuCellInteractions* pbc = new CpuCellInteractions(boxDim,2.0);
+//    pbc->initialise();
+//    ASSERT_EQ(64, pbc->nCells());
+//    ASSERT_EQ(32, pbc->getTotalCornerCells());
+//    ASSERT_EQ(12, pbc->getnCellsLeft());
+//    ASSERT_EQ(12, pbc->getnCellsRight());
+//}
 
 
 int main(int argc, char *argv[]){
