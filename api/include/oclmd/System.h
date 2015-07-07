@@ -51,7 +51,8 @@ public:
      * cell information and referred cell informatin from 
      * openfoam
      */
-    System(const std::vector<std::vector<int> > dil,
+    System(const Vec3 boxDimensions[],
+           const std::vector<std::vector<int> > dil,
            const std::vector<std::vector<int> > neighbouringCells,
            int ncells,
            int nrefcells);

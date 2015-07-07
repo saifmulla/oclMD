@@ -29,15 +29,16 @@ OclMD::ContextImpl::ContextImpl(Solver& solver,System& system, Platform* platfor
     std::string name = platform_->getPlatform().getName();
     std::cout << "Using Platform " << name.c_str() << std::endl;
     std::cout << "Initialising system with " << system.getNumParticles() << " Particles " << std::endl;
+    
+    /// initialise baseData implementations
+    internalDataBase = platform_->createBase(OclMD::BaseData::className(),*this);
+    internalDataBase.getAs<OclMD::BaseData>().initialise(system_,*this);
+    
     /// get list of forceImpl from System list of forces in the system.
     for (int fi = 0; fi < system.getNumForces(); fi++) {
         forceImpls_.push_back(system.getForce(fi).createImpl());
         forceImpls_[fi]->initialise(*this);
     }
-    
-    /// initialise baseData implementations
-    internalDataBase = platform_->createBase(OclMD::BaseData::className(),*this);
-    internalDataBase.getAs<OclMD::BaseData>().initialise(system_);
     
     /// initialise internal force class
     forceKernel = platform_->createBase(OclMD::BaseCalculateForcesAndEnergy::className(),
@@ -71,6 +72,24 @@ void OclMD::ContextImpl::setPositions(const std::vector<Vec3>& positions){
     internalDataBase.getAs<OclMD::BaseData>().setPositions(*this,positions);
 }
 
+void OclMD::ContextImpl::setReferredPositions(const std::vector<std::vector<Vec3> >& referredpositions){
+    internalDataBase.getAs<OclMD::BaseData>().setReferredPositions(*this,referredpositions);
+}
+
+
+void OclMD::ContextImpl::setCellOccupancyList(
+                        const std::vector<std::vector<int> >& cellOccupancy
+                                              )
+{
+    internalDataBase.getAs<OclMD::BaseData>().setCellOccupancyList(*this, cellOccupancy);
+}
+
+void OclMD::ContextImpl::setRefCellParticles(
+                        const std::vector<std::vector<int> >& refCellParticles)
+{
+    internalDataBase.getAs<OclMD::BaseData>().setReferredCellParticles(*this,refCellParticles);
+}
+
 void OclMD::ContextImpl::getForces(std::vector<Vec3>& forces){
     internalDataBase.getAs<OclMD::BaseData>().getForces(*this,forces);
 }
@@ -83,12 +102,17 @@ void OclMD::ContextImpl::getPotentialEnergy(std::vector<Real>& pe){
     internalDataBase.getAs<OclMD::BaseData>().getPotentialEnergy(*this,pe);
 }
 
+void* OclMD::ContextImpl::getInteractionCells() {
+    return (internalDataBase.getAs<OclMD::BaseData>().getInteractionCells());
+}
+
 Real OclMD::ContextImpl::getTotalEnergy() {
     return 0.0;
 }
 
 void OclMD::ContextImpl::CalculateForcesandEnergy(){
     forceKernel.getAs<OclMD::BaseCalculateForcesAndEnergy>().prepare(*this);
+    
     for(int f = 0; f < system_.getNumForces(); f++){
         forceImpls_[f]->calculateForces(*this);
     }
@@ -99,3 +123,4 @@ void OclMD::ContextImpl::CalculateForcesandEnergy(){
 OclMD::System& OclMD::ContextImpl::getSystem(){
     return system_;
 }
+

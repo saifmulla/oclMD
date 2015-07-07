@@ -10,10 +10,18 @@
 #include <iostream>
 #include <valarray>
 #include <list>
+#include <vector>
 #include "oclmd/Vec3.h"
 #include "gtest/gtest.h"
 
 using namespace OclMD;
+
+void initialisePointers(std::vector<Vec3>& arrayofpointers){
+    Vec3* v = &arrayofpointers[0];
+    v[0] = Vec3(0.09, 0.09, 0.09);
+    v[1] = Vec3(1.5, 1.5, 1.5);
+    v[2] = Vec3(2.5, 2.5, 2.5);
+}
 
 TEST(TestVec3,declare){
     Vec3 xcomponent;
@@ -140,6 +148,14 @@ TEST(TestVec3, mag){
     ASSERT_EQ(expect,mag);
 }
 
+TEST(TestVec3, arrayofpointers){
+    std::vector<Vec3> xarr(3);
+    initialisePointers(xarr);
+    ASSERT_EQ(0.09, xarr[0][0]);
+    ASSERT_EQ(1.5, xarr[1][1]);
+    ASSERT_EQ(2.5, xarr[2][2]);
+}
+
 /**
  * some tests are commented to enable compilation
  * even if clang compiler is used
@@ -180,6 +196,20 @@ TEST(TestVec3, assign){
         FAIL();
 }
 
+TEST(TestVec3, dynamicVectors){
+    std::vector<std::vector<int> > twod;
+    twod.resize(2);
+    twod[0].resize(2);
+    twod[1].resize(1);
+    
+    twod[0][0] = 1;
+    twod[0][1] = 2;
+    twod[1][0] = 3;
+    
+    ASSERT_EQ(1, twod[0][0]);
+    ASSERT_EQ(2, twod[0][1]);
+    ASSERT_EQ(3, twod[1][0]);
+}
 //TEST(TestVec3, ompArray){
 //    std::valarray<Vec3> vec3array(100000);
 //    for(int i = 0;i < 100000;++i)

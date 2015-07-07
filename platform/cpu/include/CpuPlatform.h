@@ -64,6 +64,8 @@ public:
     
     BaseFactory* getBaseFactory() const;
     
+    void setReferredPositions(int size);
+    
 private:
     CpuBaseFactory* factory;
 };
@@ -86,10 +88,13 @@ public:
     // destructor to delete all initialised pointer data strucure
     ~PlatformData();
     
+    void setReferredPositions(int size);
+    
     int numParticles_;//numParticles in system
     int stepCount_;
     Real time_;
     void* positions_;
+    void* referredPositions_;
     void* forces_;
     void* virial_;
     void* pE_;

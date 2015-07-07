@@ -58,9 +58,17 @@ public:
     }
     
     /// implement virtual private functions declared in abstract class
-    void initialise(const System& system);
+    void initialise(const System& system, ContextImpl& context);
     
     void setPositions(ContextImpl& context, const std::vector<Vec3>& positions);
+    
+    void setReferredPositions(ContextImpl& context, const std::vector<std::vector<Vec3> >& referredPositions);
+    
+    void setCellOccupancyList(ContextImpl& context,
+                              const std::vector<std::vector<int> >& celloccupancy);
+    
+    void setReferredCellParticles(ContextImpl& context,
+                                  const std::vector<std::vector<int> >& referredcellparticles);
     
     void getForces(ContextImpl& context, std::vector<Vec3>& forces);
     
@@ -71,6 +79,12 @@ public:
     void setPeriodicBox(ContextImpl& context, const Vec3& x, const Vec3& y, const Vec3& z) const;
     
     void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z) const;
+    
+    const std::vector<int>* getCellOccupancyListByCell(int cellId);
+    
+    const std::vector<int>* getRefCellParticlesByCell(int cellId);
+    
+    void* getInteractionCells();
 };
 
 
@@ -85,10 +99,11 @@ public:
     }
     
     void initialise(const System& system,
-                    const NonBondedForceImpl& force
+                    const NonBondedForceImpl& force,
+                    ContextImpl& context
                     );
     
-    void preprocess();
+    void preprocess(void* interactionCells);
     
     Real calculate(ContextImpl& context);
     

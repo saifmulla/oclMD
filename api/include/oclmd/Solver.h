@@ -41,6 +41,9 @@ public:
     /// set positions to the simulation its running
     void setPositions(const std::vector<Vec3>& positions);
     
+    /// set refferred positions
+    void setReferredPositions(const std::vector<std::vector<Vec3> >& referredpositions);
+    
     /// get updated forces from the system.
     void getForces(std::vector<Vec3>& forces);
     
@@ -49,6 +52,12 @@ public:
     
     /// get potential energy
     void getPotentialEnergy(std::vector<Real>& pe);
+    
+    /// set cell occupancy list
+    void setCellOccupancyList(std::vector<std::vector<int> >& cellOccupancy);
+    
+    /// set referredcell particles
+    void setReferredCellParticles(std::vector<std::vector<int> >& refCellParticles);
     
     /// get object of ContextImpl
     ContextImpl& getImpl();

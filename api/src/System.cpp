@@ -25,15 +25,16 @@ OclMD::System::System(const Vec3 boxDimensions[], int moleculeSize)
     dimensions_[2] = Vec3(boxDimensions[2]);
 }
 
-OclMD::System::System(const std::vector<std::vector<int> > dil,
+OclMD::System::System(const Vec3 boxDimensions[],
+                      const std::vector<std::vector<int> > dil,
                       const std::vector<std::vector<int> > neighbouringCells,
                       int ncells,
                       int nrefcells)
 :moleculeSize_(1),forces_(0),masses_(0),charges_(0),dil_(dil),neighbouringCells_(neighbouringCells),nCells_(ncells),nRefCells_(nrefcells)
 {
-    dimensions_[0] = Vec3(4,0,0);
-    dimensions_[1] = Vec3(0,4,0);
-    dimensions_[2] = Vec3(0,0,4);
+    dimensions_[0] = Vec3(boxDimensions[0]);
+    dimensions_[1] = Vec3(boxDimensions[1]);
+    dimensions_[2] = Vec3(boxDimensions[2]);
 }
 
 OclMD::System::~System(){

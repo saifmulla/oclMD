@@ -45,6 +45,12 @@ public:
     /// set data functions
     void setPositions(const std::vector<Vec3>& positions);
     
+    void setReferredPositions(const std::vector<std::vector<Vec3> >& referredPositions);
+    
+    void setCellOccupancyList(const std::vector<std::vector<int> >& cellOccupancy);
+    
+    void setRefCellParticles(const std::vector<std::vector<int> >& refCellParticles);
+    
     void getForces(std::vector<Vec3>& forces);
     
     void getPotentialEnergy(std::vector<Real>& pe);
@@ -69,6 +75,9 @@ public:
     void* getPlatformData() const;
     
 //    const void* getPlatformData() const;
+    
+    void* getInteractionCells();
+    
 private:
     friend class Solver;
     Solver& owner_;

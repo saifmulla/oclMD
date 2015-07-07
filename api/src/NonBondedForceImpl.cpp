@@ -68,7 +68,12 @@ void OclMD::NonBondedForceImpl::initialise(ContextImpl& context)
     /// initialise internal class
     baseKernel_.getAs<OclMD::BaseCalculateNonBondedForce>().initialise(
                                                             context.getSystem(),
-                                                            *this);
+                                                            *this,
+                                                            context);
+}
+
+void OclMD::NonBondedForceImpl::prepare(OclMD::ContextImpl& context){
+    
 }
 
 Real OclMD::NonBondedForceImpl::calculateForces(ContextImpl& context){

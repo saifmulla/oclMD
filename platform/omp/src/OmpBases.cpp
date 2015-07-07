@@ -48,7 +48,7 @@ Real OclMD::OmpBaseCalculateForcesAndEnergy::calculate(ContextImpl& context){
 
 /// definition of class OmpBaseData
 
-void OclMD::OmpBaseData::initialise(const System& system){
+void OclMD::OmpBaseData::initialise(const System& system, ContextImpl& context){
     
 }
 
@@ -61,6 +61,21 @@ void OclMD::OmpBaseData::setPositions(ContextImpl& context,
     }
     
 }
+
+void OclMD::OmpBaseData::setReferredPositions(ContextImpl& context, const std::vector<std::vector<Vec3> >& referredPositions){
+    
+}
+
+void OclMD::OmpBaseData::setCellOccupancyList(ContextImpl& context,
+                                              const std::vector<std::vector<int> >& celloccupancy){
+    
+}
+
+void OclMD::OmpBaseData::setReferredCellParticles(ContextImpl& context,
+                                              const std::vector<std::vector<int> >& referredcellparticles){
+    
+}
+
 
 void OclMD::OmpBaseData::getForces(ContextImpl& context,
                                    std::vector<Vec3>& forces){
@@ -102,17 +117,30 @@ void OclMD::OmpBaseData::getPeriodicBox(ContextImpl& context,
     
 };
 
+const std::vector<int>* OclMD::OmpBaseData::getCellOccupancyListByCell(int cellId){
+    
+}
+
+const std::vector<int>* OclMD::OmpBaseData::getRefCellParticlesByCell(int cellId){
+    
+}
+
+void* OclMD::OmpBaseData::getInteractionCells(){
+    
+}
 
 /// definition for class OmpCalculateNonBondedForceBase
 void OclMD::OmpBaseCalculateNonBondedForce::initialise(const System& system,
-                                                       const NonBondedForceImpl& force)
+                                                       const NonBondedForceImpl& force,
+                                                       ContextImpl& context)
 {
     nonbondedixn = new OclMD::OmpNonBondedIxn((const OclMD::NonBondedForceImpl::LJInfo**) force.getLJInfo());
 }
 
-void OclMD::OmpBaseCalculateNonBondedForce::preprocess(){
+void OclMD::OmpBaseCalculateNonBondedForce::preprocess(void* interactioncells){
     
 }
+
 Real OclMD::OmpBaseCalculateNonBondedForce::calculate(ContextImpl& context)
 {
     

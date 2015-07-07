@@ -30,6 +30,18 @@ void OclMD::Solver::setPositions(const std::vector<Vec3>& positions){
     impl->setPositions(positions);
 }
 
+void OclMD::Solver::setReferredPositions(const std::vector<std::vector<Vec3> >& referredpositions){
+    impl->setReferredPositions(referredpositions);
+}
+
+void OclMD::Solver::setCellOccupancyList(std::vector<std::vector<int> >& cellOccupancy){
+    impl->setCellOccupancyList(cellOccupancy);
+}
+
+void OclMD::Solver::setReferredCellParticles(std::vector<std::vector<int> >& refCellParticles){
+    impl->setRefCellParticles(refCellParticles);
+}
+
 void OclMD::Solver::getForces(std::vector<Vec3>& forces){
     impl->getForces(forces);
 }

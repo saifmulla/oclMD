@@ -95,6 +95,19 @@ public:
     
 };
     
+class BaseInteractions : public BaseImpl {
+public:
+    static std::string className(){
+        return "BaseInteractions";
+    }
+    
+    BaseInteractions(const Platform& platform, std::string classname) : BaseImpl(platform, classname){
+        
+    }
+    
+    virtual void initialise(const System& system, ContextImpl& context);
+};
+    
 /**
  * classname BaseData
  *
@@ -117,9 +130,17 @@ public:
         
     }
     
-    virtual void initialise(const System& system) = 0;
+    virtual void initialise(const System& system, ContextImpl& context) = 0;
     
     virtual void setPositions(ContextImpl& context, const std::vector<Vec3>& positions) = 0;
+    
+    virtual void setReferredPositions(ContextImpl& context, const std::vector<std::vector<Vec3> >& referredPositions) = 0;
+    
+    virtual void setCellOccupancyList(ContextImpl& context,
+                                      const std::vector<std::vector<int> >& cellOccupancy) = 0;
+    
+    virtual void setReferredCellParticles(ContextImpl& context,
+                                          const std::vector<std::vector<int> >& referredCellParticles) = 0;
     
     virtual void getForces(ContextImpl& context, std::vector<Vec3>& forces) = 0;
     
@@ -130,9 +151,15 @@ public:
     virtual void setPeriodicBox(ContextImpl& context, const Vec3& x, const Vec3& y, const Vec3& z) const = 0;
     
     virtual void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z) const = 0;
+    
+    virtual const std::vector<int>* getCellOccupancyListByCell(int cellId) = 0;
+    
+    virtual const std::vector<int>* getRefCellParticlesByCell(int cellId) = 0;
+    
+    virtual void* getInteractionCells() = 0;
+    
 };
  
-
 class BaseCalculateNonBondedForce : public BaseImpl {
 public:
     static std::string className(){
@@ -143,9 +170,12 @@ public:
         
     }
     
-    virtual void initialise(const System& system, const NonBondedForceImpl& forceImpl) = 0;
+    virtual void initialise(const System& system, const NonBondedForceImpl& forceImpl, ContextImpl& context) = 0;
     
-    virtual void preprocess() = 0;
+    /** pass a void pointer so that later it could be access internally with a 
+     * static cast
+     */
+    virtual void preprocess(void* interactionCells) = 0;
     
     virtual Real calculate(ContextImpl& context) = 0;
 };

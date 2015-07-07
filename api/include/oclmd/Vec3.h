@@ -61,27 +61,28 @@ public:
         return *this;
     }
     
-    Vec3 operator*(const Vec3& rhs) {
+    Vec3 operator*(const Vec3& rhs) const {
         return Vec3(data_[0] * rhs.data_[0],data_[1] * rhs.data_[1],data_[2] * rhs.data_[2]);
     }
     
     //equal operator
-    bool operator==(const Vec3& rhs){
+    bool operator==(const Vec3& rhs) const {
         return (data_[0] == rhs[0] && data_[1] == rhs[1] && data_[2] == rhs[2]);
     }
     
     /// addition operator
-    Vec3 operator+(const Vec3& rhs){
+    Vec3 operator+(const Vec3& rhs) const {
         return Vec3(data_[0] + rhs.data_[0],data_[1] + rhs.data_[1],data_[2] + rhs.data_[2]);
     }
     
     /// substraction operator
-    Vec3 operator-(const Vec3& rhs){
+    Vec3 operator-(const Vec3& rhs) const {
         return Vec3(data_[0] - rhs.data_[0],data_[1] - rhs.data_[1],data_[2] - rhs.data_[2]);
     }
     
+    
     /// division operator
-    Vec3 operator/(const Real divisor){
+    Vec3 operator/(const Real divisor) const {
         return Vec3(data_[0]/divisor,data_[1]/divisor,data_[2]/divisor);
     }
     
@@ -111,7 +112,7 @@ public:
         return v;
     }
     //scalar product
-    Vec3 operator*(const Real scalar){
+    Vec3 operator*(const Real scalar) const {
         const Vec3& lhs = *this;
         return Vec3(lhs[0]*scalar, lhs[1]*scalar, lhs[2]*scalar);
     }
@@ -128,7 +129,7 @@ inline std::ostream& operator<<(std::ostream& os, const Vec3& vec) {
     return vec.write(os);
 }
     
-inline Real MagSqr(Vec3& data){
+inline Real MagSqr(const Vec3& data){
     Real sum = 0.0;
     sum += data[0] * data[0];
     sum += data[1] * data[1];
@@ -136,7 +137,7 @@ inline Real MagSqr(Vec3& data){
     return sum;
 }
 
-inline Real Mag(Real magsqr){
+inline Real Mag(const Real magsqr) {
     return std::SQRT(magsqr);
 }
     

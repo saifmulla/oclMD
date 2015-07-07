@@ -28,8 +28,6 @@ public:
     
     Real calculate(ContextImpl& context);
     
-private:
-    CpuInteractionCells* interactionCells_;
 };
 
 class CpuBaseData : public BaseData {
@@ -39,14 +37,23 @@ public:
 //        
 //    }
     CpuBaseData(const Platform& platform, std::string className)
-    :BaseData(platform,className){
+    :BaseData(platform,className),interactionCells_(0){
         
     }
     
     /// implement virtual private functions declared in abstract class
-    void initialise(const System& system);
+    void initialise(const System& system, ContextImpl& context);
     
     void setPositions(ContextImpl& context, const std::vector<Vec3>& positions);
+    
+    void setCellOccupancyList(ContextImpl& context,
+                                      const std::vector<std::vector<int> >& cellOccupancy);
+    
+    void setReferredCellParticles(ContextImpl& context,
+                                  const std::vector<std::vector<int> >& referredCellParticles);
+    
+    void setReferredPositions(ContextImpl& context,
+                              const std::vector<std::vector<OclMD::Vec3> >& referredPositions);
     
     void getForces(ContextImpl& context, std::vector<Vec3>& forces);
     
@@ -58,8 +65,15 @@ public:
     
     void getPeriodicBox(ContextImpl& context, Vec3& x, Vec3& y, Vec3& z) const;
     
+    const std::vector<int>* getCellOccupancyListByCell(int cellId);
+    
+    const std::vector<int>* getRefCellParticlesByCell(int cellId);
+    
+    void* getInteractionCells();
+    
 private:
-//    CpuPlatform::PlaformData pData_;
+    CpuInteractionCells* interactionCells_;
+
 };
 
     
@@ -74,10 +88,11 @@ public:
     }
     
     void initialise(const System& system,
-                    const NonBondedForceImpl& force
+                    const NonBondedForceImpl& force,
+                    ContextImpl& context
                     );
     
-    void preprocess();
+    void preprocess(void* interactionCells);
     
     Real calculate(ContextImpl& context);
     

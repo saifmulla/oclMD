@@ -39,6 +39,30 @@ public:
                          std::vector<tensor>& virial);
     
     /**
+     * @function calculateForce
+     * @param positionI
+     * @param positionJ
+     * @param forceI
+     * @param forceJ
+     * @param peI
+     * @param peJ
+     * @param rfI
+     * @param rfI
+     * @param iDI
+     * @param iDJ
+     */
+    void calculateForce(const Vec3& positionI,
+                        const Vec3& positionJ,
+                        Vec3& forceI,
+                        Vec3& forceJ,
+                        Real& peI,
+                        Real& peJ,
+                        Tensor<double>& rfI,
+                        Tensor<double>& rfJ,
+                        const int iDI = 0,
+                        const int iDJ = 0
+                        );
+    /**
      * @function pairRcutSqr
      * @param siteId a atom
      * @param siteId b atom

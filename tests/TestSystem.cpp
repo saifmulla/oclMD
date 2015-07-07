@@ -34,7 +34,11 @@ TEST(TestSystem, paramConstructor){
 
 TEST(TestSystem, paramConstructor2){
     std::vector<std::vector<int> > dil(2);
-    System s(dil,dil,2,4);
+    Vec3 dimensions[3];
+    dimensions[0][0] = 4;
+    dimensions[1][0] = 4;
+    dimensions[2][0] = 4;
+    System s(dimensions,dil,dil,2,4);
 }
 
 TEST(TestSystem, getterFunctions){
@@ -43,8 +47,13 @@ TEST(TestSystem, getterFunctions){
     dil[0].push_back(1);
     dil[1].push_back(2);
     dil[1].push_back(3);
-    
-    System s(dil,dil,2,2);
+
+    Vec3 dimensions[3];
+    dimensions[0][0] = 4;
+    dimensions[1][0] = 4;
+    dimensions[2][0] = 4;
+
+    System s(dimensions,dil,dil,2,2);
     
     ASSERT_EQ(2, s.getnCells());
     ASSERT_EQ(2, s.getnRefCells());

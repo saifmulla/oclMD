@@ -50,6 +50,12 @@ public:
      */
     Real calculateForces(ContextImpl& context);
     
+    /**
+     * invoke any preprocessing functionality
+     * before calculating forces.
+     */
+    void prepare(ContextImpl& context);
+    
     Force& getOwner(){
         return owner_;
     }
